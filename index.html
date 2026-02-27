@@ -3,7 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>WIDE_MCR_TOOLS</title>
+    <title>1111111111111 WIDE_MCR_TOOLS</title>
+    
+    <!-- DNS Prefetch for CORS proxy domains - helps on restrictive networks -->
+    <link rel="dns-prefetch" href="https://api.allorigins.win">
+    <link rel="dns-prefetch" href="https://corsproxy.io">
+    <link rel="dns-prefetch" href="https://api.codetabs.com">
+    <link rel="dns-prefetch" href="https://thingproxy.freeboard.io">
+    <link rel="dns-prefetch" href="https://corsproxy.org">
+    <link rel="dns-prefetch" href="https://api.cors.lol">
+    <link rel="dns-prefetch" href="https://crossorigin.me">
+    <link rel="dns-prefetch" href="https://test.cors.workers.dev">
+    <link rel="preconnect" href="https://api.allorigins.win" crossorigin>
+    <link rel="preconnect" href="https://corsproxy.io" crossorigin>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -275,6 +287,18 @@ a.ticker-item:hover {
   animation: milestone-pop 0.8s ease-in-out forwards;
 }
 
+/* Fetch struggling indicator - pulsing badge */
+@keyframes badge-struggling {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.badge-struggling .badge-content span {
+  animation: badge-struggling 2s ease-in-out infinite;
+  color: inherit;
+  opacity: 0.6;
+}
+
 .close-btn{height:100%;width: 48px;display:none;align-items:center;justify-content:center;background: rgba(255, 255, 255, 0.06);border:none;color: var(--text-secondary);font-size: 18px;font-weight: 400;cursor:pointer;flex-shrink:0;}
 .close-btn:hover{background: var(--accent-red);color: #fff;box-shadow: 0 0 20px rgba(255, 69, 58, 0.4);}
 .close-btn:active{opacity: 0.8;}
@@ -480,6 +504,14 @@ if (typeof Promise.any !== 'function') {
   };
 }
 
+/* ===== AbortController Polyfill for older browsers ===== */
+if (typeof AbortController === 'undefined') {
+  window.AbortController = function() {
+    this.signal = { aborted: false, addEventListener: function(){}, removeEventListener: function(){} };
+    this.abort = function() { this.signal.aborted = true; };
+  };
+}
+
 /* ===== News Ticker ===== */
 let tickerTitles = [];
 let tickerLinks = [];
@@ -513,16 +545,21 @@ async function fetchNewsTicker() {
   const CORS_PROXIES = [
     url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
     url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-    url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+    url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+    url => `https://corsproxy.org/?url=${encodeURIComponent(url)}`
   ];
   
   const urlWithCacheBust = `${BASE_URL}?_t=${fetchStartTime}`;
   
-  for (const makeProxy of CORS_PROXIES) {
+  // Strategy 1: Race all proxies in parallel
+  const parallelPromises = CORS_PROXIES.map(async (makeProxy) => {
     try {
       const proxyUrl = makeProxy(urlWithCacheBust);
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
       
       const res = await fetch(proxyUrl, { 
+        signal: controller.signal,
         cache: 'no-store',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -530,35 +567,85 @@ async function fetchNewsTicker() {
           'Expires': '0'
         }
       });
+      clearTimeout(timeout);
       
-      if (!res.ok) {
-        console.warn(`Ticker proxy failed with status ${res.status}`);
-        continue;
-      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       
       const html = await res.text();
+      if (!html || html.length < 500) throw new Error('Insufficient data');
       
-      if (!html || html.length < 500) {
-        console.warn('Ticker received insufficient HTML data');
-        continue;
+      return html;
+    } catch(e) {
+      throw e;
+    }
+  });
+  
+  let html = null;
+  
+  try {
+    html = await Promise.any(parallelPromises);
+  } catch(e) {
+    console.warn('Ticker: all parallel proxies failed, trying sequential...');
+    // Strategy 2: Sequential fallback with longer timeout
+    for (const makeProxy of CORS_PROXIES) {
+      try {
+        const proxyUrl = makeProxy(urlWithCacheBust);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 20000);
+        const res = await fetch(proxyUrl, { signal: controller.signal, cache: 'no-store' });
+        clearTimeout(timeout);
+        if (!res.ok) continue;
+        html = await res.text();
+        if (html && html.length >= 500) break;
+        html = null;
+      } catch(e2) { continue; }
+    }
+  }
+  
+  if (html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    
+    const titles = [];
+    const links = [];
+    
+    const allAnchors = doc.querySelectorAll('a[href]');
+    
+    allAnchors.forEach(anchor => {
+      const h2 = anchor.querySelector('h2');
+      if (h2) {
+        const text = h2.textContent?.trim();
+        if (text && text.length > 5 && text.length < 200 && countWords(text) >= MIN_WORD_COUNT && !titles.includes(text)) {
+          const rawHref = anchor.getAttribute('href');
+          let href = 'https://www.athletiko.gr';
+          
+          if (rawHref) {
+            if (rawHref.startsWith('http://') || rawHref.startsWith('https://')) {
+              href = rawHref;
+            } else if (rawHref.startsWith('//')) {
+              href = 'https:' + rawHref;
+            } else if (rawHref.startsWith('/')) {
+              href = 'https://www.athletiko.gr' + rawHref;
+            } else {
+              href = 'https://www.athletiko.gr/' + rawHref;
+            }
+          }
+          
+          titles.push(text);
+          links.push(href);
+        }
       }
-      
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      
-      const titles = [];
-      const links = [];
-      
-      const allAnchors = doc.querySelectorAll('a[href]');
-      
-      allAnchors.forEach(anchor => {
-        const h2 = anchor.querySelector('h2');
-        if (h2) {
-          const text = h2.textContent?.trim();
-          if (text && text.length > 5 && text.length < 200 && countWords(text) >= MIN_WORD_COUNT && !titles.includes(text)) {
+    });
+    
+    if (titles.length === 0) {
+      const h2Elements = doc.querySelectorAll('h2');
+      h2Elements.forEach(h2 => {
+        const text = h2.textContent?.trim();
+        if (text && text.length > 5 && text.length < 200 && countWords(text) >= MIN_WORD_COUNT && !titles.includes(text)) {
+          let anchor = h2.closest('a') || h2.querySelector('a');
+          let href = 'https://www.athletiko.gr';
+          if (anchor) {
             const rawHref = anchor.getAttribute('href');
-            let href = 'https://www.athletiko.gr';
-            
             if (rawHref) {
               if (rawHref.startsWith('http://') || rawHref.startsWith('https://')) {
                 href = rawHref;
@@ -570,58 +657,28 @@ async function fetchNewsTicker() {
                 href = 'https://www.athletiko.gr/' + rawHref;
               }
             }
-            
-            titles.push(text);
-            links.push(href);
           }
+          titles.push(text);
+          links.push(href);
         }
       });
+    }
+    
+    if (titles.length > 0) {
+      const hasNewContent = titles.some(title => !tickerTitles.includes(title));
       
-      if (titles.length === 0) {
-        const h2Elements = doc.querySelectorAll('h2');
-        h2Elements.forEach(h2 => {
-          const text = h2.textContent?.trim();
-          if (text && text.length > 5 && text.length < 200 && countWords(text) >= MIN_WORD_COUNT && !titles.includes(text)) {
-            let anchor = h2.closest('a') || h2.querySelector('a');
-            let href = 'https://www.athletiko.gr';
-            if (anchor) {
-              const rawHref = anchor.getAttribute('href');
-              if (rawHref) {
-                if (rawHref.startsWith('http://') || rawHref.startsWith('https://')) {
-                  href = rawHref;
-                } else if (rawHref.startsWith('//')) {
-                  href = 'https:' + rawHref;
-                } else if (rawHref.startsWith('/')) {
-                  href = 'https://www.athletiko.gr' + rawHref;
-                } else {
-                  href = 'https://www.athletiko.gr/' + rawHref;
-                }
-              }
-            }
-            titles.push(text);
-            links.push(href);
-          }
-        });
+      if (hasNewContent || tickerTitles.length === 0) {
+        console.log(`✓ Ticker updated: ${titles.length} articles found (${hasNewContent ? 'new content' : 'initial load'})`);
+        tickerTitles = titles;
+        tickerLinks = links;
+        lastFetchTime = fetchStartTime;
+        initTicker();
+      } else {
+        console.log('Ticker checked: no new articles');
       }
       
-      if (titles.length > 0) {
-        const hasNewContent = titles.some(title => !tickerTitles.includes(title));
-        
-        if (hasNewContent || tickerTitles.length === 0) {
-          console.log(`✓ Ticker updated: ${titles.length} articles found (${hasNewContent ? 'new content' : 'initial load'})`);
-          tickerTitles = titles;
-          tickerLinks = links;
-          lastFetchTime = fetchStartTime;
-          initTicker();
-        } else {
-          console.log('Ticker checked: no new articles');
-        }
-        
-        isFetchingTicker = false;
-        return;
-      }
-    } catch (e) {
-      console.warn('Ticker fetch error:', e.message || e);
+      isFetchingTicker = false;
+      return;
     }
   }
   
@@ -766,25 +823,101 @@ class StreamApp {
     this.lastCounts = {};
     this.TARGET_QUALITY = 'hd720';
     this.STORAGE_KEY = 'streamCommandConfig';
+    this.PROXY_HEALTH_KEY = 'proxyHealthData';
+    this.VIEWER_CACHE_KEY = 'viewerCountCache';
     this.MIN_INTERVAL_MS = 4000;
-    this.FETCH_TIMEOUT = 10000; // Increased from 6s to 10s for slower networks
-    this.SEQUENTIAL_TIMEOUT = 12000; // Longer timeout for sequential fallback
+    this.FETCH_TIMEOUT = 12000;
+    this.SEQUENTIAL_TIMEOUT = 18000;
     
-    // Expanded proxy list for better network coverage
+    // Expanded proxy list with more diverse services for better network coverage
     this.CORS_PROXIES = [
-      url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-      url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-      url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-      url => `https://thingproxy.freeboard.io/fetch/${url}`,
-      url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}&callback=`,
+      { fn: url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, id: 'allorigins-raw', type: 'raw' },
+      { fn: url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`, id: 'corsproxy-io', type: 'raw' },
+      { fn: url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`, id: 'codetabs', type: 'raw' },
+      { fn: url => `https://corsproxy.org/?url=${encodeURIComponent(url)}`, id: 'corsproxy-org', type: 'raw' },
+      { fn: url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, id: 'allorigins-get', type: 'json' },
+      { fn: url => `https://thingproxy.freeboard.io/fetch/${url}`, id: 'thingproxy', type: 'raw' },
     ];
 
-    // Track which proxies work per-session for smarter retry
-    this.proxyHealth = {};
-    this.CORS_PROXIES.forEach((_, i) => { this.proxyHealth[i] = { successes: 0, failures: 0, lastSuccess: 0 }; });
+    // Load persistent proxy health from localStorage
+    this.proxyHealth = this._loadProxyHealth();
 
     this.userIconSVG = '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+    
+    // Load cached viewer counts for instant display
+    this.viewerCache = this._loadViewerCache();
+    
+    // Track online/offline status
+    this._isOnline = navigator.onLine !== false; // default true if API unavailable
+    window.addEventListener('online', () => { 
+      this._isOnline = true; 
+      console.log('[Network] Back online - resuming fetches');
+      // Retry all active slots immediately
+      Object.keys(this.slotStates).forEach(slot => {
+        const st = this.slotStates[slot];
+        if (st && st.vidId && st.realtimeActive) {
+          st.consecutiveFailures = 0;
+          this._fetchAndUpdate(slot);
+        }
+      });
+    });
+    window.addEventListener('offline', () => { 
+      this._isOnline = false; 
+      console.warn('[Network] Offline detected - pausing fetches');
+    });
+    
     this.loadConfig();
+  }
+
+  _loadProxyHealth() {
+    const health = {};
+    this.CORS_PROXIES.forEach(p => {
+      health[p.id] = { successes: 0, failures: 0, lastSuccess: 0, avgResponseTime: 5000, blocked: false };
+    });
+    try {
+      const saved = localStorage.getItem(this.PROXY_HEALTH_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Merge saved data, but decay old stats (reduce by 50% to not be stuck on stale data)
+        Object.keys(parsed).forEach(id => {
+          if (health[id]) {
+            health[id].successes = Math.floor((parsed[id].successes || 0) * 0.5);
+            health[id].failures = Math.floor((parsed[id].failures || 0) * 0.5);
+            health[id].lastSuccess = parsed[id].lastSuccess || 0;
+            health[id].avgResponseTime = parsed[id].avgResponseTime || 5000;
+            health[id].blocked = false; // Reset blocked status on reload
+          }
+        });
+      }
+    } catch(e) {}
+    return health;
+  }
+
+  _saveProxyHealth() {
+    try {
+      localStorage.setItem(this.PROXY_HEALTH_KEY, JSON.stringify(this.proxyHealth));
+    } catch(e) {}
+  }
+
+  _loadViewerCache() {
+    try {
+      const saved = localStorage.getItem(this.VIEWER_CACHE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Only use cache if less than 5 minutes old
+        if (parsed._timestamp && Date.now() - parsed._timestamp < 300000) {
+          return parsed;
+        }
+      }
+    } catch(e) {}
+    return {};
+  }
+
+  _saveViewerCache() {
+    try {
+      this.viewerCache._timestamp = Date.now();
+      localStorage.setItem(this.VIEWER_CACHE_KEY, JSON.stringify(this.viewerCache));
+    } catch(e) {}
   }
 
   onYTApiReady() {
@@ -812,10 +945,13 @@ class StreamApp {
     newDiv.style.cssText = 'display:block;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;';
     container.appendChild(newDiv);
     if (ph) ph.style.display = 'none';
+    
+    const playerOrigin = (window.location.protocol === 'file:') ? 'https://www.youtube.com' : window.location.origin;
+    
     this.players[slot] = new YT.Player(`player-${slot}`, {
       videoId: vidId,
       host: 'https://www.youtube-nocookie.com',
-      playerVars: { autoplay: 1, mute: 1, controls: 1, disablekb: 0, enablejsapi: 1, fs: 1, iv_load_policy: 3, modestbranding: 1, playsinline: 1, rel: 0, showinfo: 0, cc_load_policy: 0, origin: window.location.origin, vq: 'hd720' },
+      playerVars: { autoplay: 1, mute: 1, controls: 1, disablekb: 0, enablejsapi: 1, fs: 1, iv_load_policy: 3, modestbranding: 1, playsinline: 1, rel: 0, showinfo: 0, cc_load_policy: 0, origin: playerOrigin, vq: 'hd720' },
       events: { 'onReady': (e) => this.onPlayerReady(e, slot), 'onStateChange': (e) => this.onPlayerStateChange(e, slot), 'onPlaybackQualityChange': (e) => this.onQualityChange(e, slot), 'onError': (e) => this.onPlayerError(e, slot) }
     });
   }
@@ -850,6 +986,13 @@ class StreamApp {
     this._ensureSlotState(slot); this.slotStates[slot].vidId = vidId; this.slotStates[slot].originalUrl = originalUrl;
     const badge = document.getElementById(`badge-${slot}`); if (badge) badge.style.display = 'flex';
     const closeBtn = document.getElementById(`close-${slot}`); if (closeBtn) closeBtn.style.display = 'flex';
+    
+    // Show cached viewer count immediately while fetching fresh data
+    const cachedCount = this.viewerCache[vidId];
+    if (cachedCount) {
+      this._updateBadgeText(slot, cachedCount);
+    }
+    
     this._startRealtimeLoop(slot);
     if (!channelName || channelName === 'Click to Add Stream' || channelName === 'Connecting...') { this.fetchChannelName(originalUrl || `https://www.youtube.com/watch?v=${vidId}`, slot); }
   }
@@ -880,7 +1023,8 @@ class StreamApp {
     const container = document.getElementById(`player-${slot}`)?.parentElement;
     if (container) { const oldDiv = document.getElementById(`player-${slot}`); if (oldDiv) oldDiv.remove(); const newDiv = document.createElement('div'); newDiv.id = `player-${slot}`; newDiv.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;height:100%;'; container.appendChild(newDiv); }
     const ph = document.getElementById(`ph-${slot}`); if (ph) ph.style.display = 'flex';
-    const badge = document.getElementById(`badge-${slot}`); if (badge) badge.style.display = 'none';
+    const badge = document.getElementById(`badge-${slot}`); 
+    if (badge) { badge.style.display = 'none'; badge.classList.remove('badge-struggling'); }
     const closeBtn = document.getElementById(`close-${slot}`); if (closeBtn) closeBtn.style.display = 'none';
     if (isMain) { const chatFrame = document.getElementById('frame-chat'); const chatPh = document.getElementById('ph-chat'); if (chatFrame) { chatFrame.style.display = 'none'; chatFrame.src = ''; } if (chatPh) chatPh.style.display = 'flex'; }
     if (this.slotStates[slot]) { this.slotStates[slot].vidId = null; this.slotStates[slot].originalUrl = null; }
@@ -888,9 +1032,42 @@ class StreamApp {
     this.saveConfig();
   }
 
-  async fetchChannelName(videoUrl, slot) { try { const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`); const data = await res.json(); const titleEl = document.getElementById(`title-${slot}`); if (!titleEl) return; if (data.author_name) { titleEl.innerText = data.author_name; titleEl.style.color = 'var(--text-primary)'; } else { titleEl.innerText = 'YouTube Channel'; titleEl.style.color = 'var(--text-secondary)'; } this.saveConfig(); } catch (e) { const titleEl = document.getElementById(`title-${slot}`); if (titleEl) { titleEl.innerText = 'Connected'; titleEl.style.color = 'var(--text-secondary)'; } this.saveConfig(); } }
+  async fetchChannelName(videoUrl, slot) { 
+    // Try multiple oEmbed services for channel name
+    const services = [
+      `https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`,
+      `https://www.youtube.com/oembed?url=${encodeURIComponent(videoUrl)}&format=json`
+    ];
+    
+    for (const serviceUrl of services) {
+      try { 
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000);
+        const res = await fetch(serviceUrl, { signal: controller.signal }); 
+        clearTimeout(timeout);
+        const data = await res.json(); 
+        const titleEl = document.getElementById(`title-${slot}`); 
+        if (!titleEl) return; 
+        if (data.author_name) { 
+          titleEl.innerText = data.author_name; 
+          titleEl.style.color = 'var(--text-primary)'; 
+          this.saveConfig(); 
+          return;
+        }
+      } catch (e) { 
+        continue;
+      }
+    }
+    
+    const titleEl = document.getElementById(`title-${slot}`); 
+    if (titleEl) { 
+      titleEl.innerText = 'Connected'; 
+      titleEl.style.color = 'var(--text-secondary)'; 
+    } 
+    this.saveConfig(); 
+  }
 
-  _ensureSlotState(slot) { if (!this.slotStates[slot]) { this.slotStates[slot] = { vidId: null, timerId: null, lastFetchTime: 0, fetching: false, realtimeActive: false, originalUrl: null, consecutiveFailures: 0 }; } }
+  _ensureSlotState(slot) { if (!this.slotStates[slot]) { this.slotStates[slot] = { vidId: null, timerId: null, lastFetchTime: 0, fetching: false, realtimeActive: false, originalUrl: null, consecutiveFailures: 0, lastGoodValue: null }; } }
   
   _startRealtimeLoop(slot) { 
     this._ensureSlotState(slot); 
@@ -905,7 +1082,8 @@ class StreamApp {
     const st = this.slotStates[slot]; 
     if (!st || !st.realtimeActive) return; 
     
-    // Dynamic interval: back off on consecutive failures, min 4s, max 30s
+    // Dynamic interval: back off on consecutive failures
+    // 0 failures: 4s, 1: 6s, 2: 9s, 3: 13.5s, 4: 20s, 5+: 30s
     let interval = this.MIN_INTERVAL_MS;
     if (st.consecutiveFailures > 0) {
       interval = Math.min(30000, this.MIN_INTERVAL_MS * Math.pow(1.5, st.consecutiveFailures));
@@ -923,7 +1101,15 @@ class StreamApp {
   async _fetchAndUpdate(slot) { 
     const st = this.slotStates[slot]; 
     if (!st || !st.vidId || st.fetching) return; 
+    
+    // Skip fetch if offline
+    if (!this._isOnline) {
+      console.warn(`[Slot ${slot}] Offline - skipping fetch`);
+      return;
+    }
+    
     st.fetching = true; 
+    const badge = document.getElementById(`badge-${slot}`);
     
     try { 
       const html = await this._fetchYouTubePage(st.vidId); 
@@ -931,10 +1117,16 @@ class StreamApp {
       
       if (!html) { 
         st.consecutiveFailures = (st.consecutiveFailures || 0) + 1;
-        if (st.consecutiveFailures <= 2) {
-          // Don't clear badge on first few failures - keep last known value
-          console.warn(`[Slot ${slot}] Fetch failed (attempt ${st.consecutiveFailures}), keeping last value`);
-        } else {
+        
+        // Show struggling indicator after 3 failures
+        if (st.consecutiveFailures >= 3 && badge) {
+          badge.classList.add('badge-struggling');
+        }
+        
+        if (st.consecutiveFailures <= 3 && st.lastGoodValue) {
+          // Keep showing last known value for first few failures
+          console.warn(`[Slot ${slot}] Fetch failed (attempt ${st.consecutiveFailures}), keeping last value: ${st.lastGoodValue}`);
+        } else if (st.consecutiveFailures > 3) {
           this._updateBadgeText(slot, '—'); 
           console.warn(`[Slot ${slot}] Fetch failed ${st.consecutiveFailures} times, showing dash`);
         }
@@ -943,6 +1135,7 @@ class StreamApp {
       
       // Reset failure counter on success
       st.consecutiveFailures = 0;
+      if (badge) badge.classList.remove('badge-struggling');
       
       const data = this._extractViewerData(html); 
       
@@ -957,7 +1150,13 @@ class StreamApp {
       }
       
       if (num !== null && !isNaN(num)) { 
-        this._updateBadgeText(slot, this._formatNumber(num));
+        const formatted = this._formatNumber(num);
+        this._updateBadgeText(slot, formatted);
+        st.lastGoodValue = formatted;
+        
+        // Cache the value
+        this.viewerCache[st.vidId] = formatted;
+        this._saveViewerCache();
         
         if (slot === 'main') {
           const prev = this.lastCounts[slot] || 0;
@@ -975,7 +1174,10 @@ class StreamApp {
       
     } catch (e) { 
       st.consecutiveFailures = (st.consecutiveFailures || 0) + 1;
-      if (st.consecutiveFailures > 2) {
+      if (st.consecutiveFailures >= 3 && badge) {
+        badge.classList.add('badge-struggling');
+      }
+      if (st.consecutiveFailures > 3) {
         this._updateBadgeText(slot, '—'); 
       }
       console.warn(`[Slot ${slot}] Fetch error:`, e.message || e);
@@ -999,87 +1201,124 @@ class StreamApp {
     return s.replace(/[&<>"']/g, function(m) { return map[m]; }); 
   }
 
-  // Sort proxies by health score (most successful first)
+  // Sort proxies by health score (most successful first), excluding blocked ones
   _getSortedProxies() {
-    const indexed = this.CORS_PROXIES.map((proxy, i) => ({ proxy, index: i, health: this.proxyHealth[i] }));
-    indexed.sort((a, b) => {
-      const scoreA = a.health.successes - a.health.failures * 2 + (a.health.lastSuccess > 0 ? 1 : 0);
-      const scoreB = b.health.successes - b.health.failures * 2 + (b.health.lastSuccess > 0 ? 1 : 0);
-      return scoreB - scoreA;
-    });
-    return indexed;
+    const now = Date.now();
+    return this.CORS_PROXIES
+      .map(proxy => {
+        const h = this.proxyHealth[proxy.id] || { successes: 0, failures: 0, lastSuccess: 0, avgResponseTime: 5000 };
+        // Score: higher = better. Weight recent success heavily.
+        const recency = h.lastSuccess ? Math.max(0, 1 - (now - h.lastSuccess) / 600000) : 0; // decay over 10 min
+        const score = (h.successes * 3) - (h.failures * 2) + (recency * 5) - (h.avgResponseTime / 2000);
+        return { ...proxy, health: h, score };
+      })
+      .filter(p => !p.health.blocked)
+      .sort((a, b) => b.score - a.score);
   }
 
-  async _tryFetchWithProxy(proxyFn, proxyIndex, url, timeout) {
-    const proxyUrl = proxyFn(url);
+  async _tryFetchWithProxy(proxy, url, timeout) {
+    const proxyUrl = proxy.fn(url);
     const controller = new AbortController();
     const to = setTimeout(() => controller.abort(), timeout);
+    const startTime = Date.now();
     
     try {
       const res = await fetch(proxyUrl, { 
         signal: controller.signal, 
-        headers: { 'Accept': 'text/html,application/xhtml+xml' }, 
-        cache: 'no-store' 
+        headers: { 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' }, 
+        cache: 'no-store',
+        mode: 'cors',
+        credentials: 'omit'
       });
       clearTimeout(to);
       
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       
       let text = await res.text();
+      const elapsed = Date.now() - startTime;
       
-      // Handle allorigins /get endpoint which wraps in JSON
-      if (proxyUrl.includes('/get?url=') && text.startsWith('{')) {
+      // Handle JSON-wrapped responses (allorigins /get endpoint)
+      if (proxy.type === 'json' && text.startsWith('{')) {
         try {
           const json = JSON.parse(text);
           if (json.contents) text = json.contents;
+          else if (json.data) text = json.data;
         } catch(e) {}
       }
       
-      if (!text || text.length < 800 || 
-          (!text.includes('ytInitialData') && !text.includes('ytInitialPlayerResponse'))) {
-        throw new Error('Invalid YouTube response (missing data)');
+      // Validate it's actually a YouTube page with useful data
+      if (!text || text.length < 800) {
+        throw new Error('Response too short');
+      }
+      
+      const hasYTData = text.includes('ytInitialData') || text.includes('ytInitialPlayerResponse');
+      const hasViewerHint = text.includes('concurrentViewers') || text.includes('watching') || text.includes('isLive');
+      
+      if (!hasYTData && !hasViewerHint) {
+        throw new Error('Invalid YouTube response (no recognizable data markers)');
       }
       
       // Track success
-      if (this.proxyHealth[proxyIndex]) {
-        this.proxyHealth[proxyIndex].successes++;
-        this.proxyHealth[proxyIndex].lastSuccess = Date.now();
+      const h = this.proxyHealth[proxy.id];
+      if (h) {
+        h.successes++;
+        h.lastSuccess = Date.now();
+        h.avgResponseTime = Math.round((h.avgResponseTime * 0.7) + (elapsed * 0.3)); // exponential moving average
+        this._saveProxyHealth();
       }
       
+      console.log(`[Proxy] ${proxy.id} succeeded in ${elapsed}ms`);
       return text;
     } catch (err) {
       clearTimeout(to);
-      // Track failure
-      if (this.proxyHealth[proxyIndex]) {
-        this.proxyHealth[proxyIndex].failures++;
+      const h = this.proxyHealth[proxy.id];
+      if (h) {
+        h.failures++;
+        // Temporarily block a proxy after 5 consecutive failures (unblock after 2 minutes)
+        if (h.failures > 5 && (!h.lastSuccess || Date.now() - h.lastSuccess > 120000)) {
+          h.blocked = true;
+          setTimeout(() => { h.blocked = false; }, 120000); // Unblock after 2 min
+          console.warn(`[Proxy] ${proxy.id} temporarily blocked after ${h.failures} failures`);
+        }
+        this._saveProxyHealth();
       }
       throw err;
     }
   }
 
   async _fetchYouTubePage(vidId) { 
-    const url = `https://www.youtube.com/watch?v=${vidId}&t=${Date.now()}`; 
+    const url = `https://www.youtube.com/watch?v=${vidId}&hl=en&t=${Date.now()}`; 
     const sortedProxies = this._getSortedProxies();
     
-    // Strategy 1: Race all proxies in parallel (fastest wins)
-    const promises = sortedProxies.map(item => 
-      this._tryFetchWithProxy(item.proxy, item.index, url, this.FETCH_TIMEOUT)
+    if (sortedProxies.length === 0) {
+      // All proxies blocked - unblock all and retry
+      console.warn('[Proxy] All proxies blocked, resetting...');
+      this.CORS_PROXIES.forEach(p => {
+        if (this.proxyHealth[p.id]) this.proxyHealth[p.id].blocked = false;
+      });
+      return null;
+    }
+    
+    // Strategy 1: Race the top proxies in parallel (fastest wins)
+    // Use top N proxies based on health score
+    const topProxies = sortedProxies.slice(0, Math.min(4, sortedProxies.length));
+    const parallelPromises = topProxies.map(proxy => 
+      this._tryFetchWithProxy(proxy, url, this.FETCH_TIMEOUT)
     );
     
     try { 
-      const result = await Promise.any(promises);
+      const result = await Promise.any(parallelPromises);
       if (result) return result;
     } catch (e) { 
-      console.warn('[Viewer Fetch] All parallel proxy attempts failed, trying sequential fallback...');
+      console.warn('[Viewer Fetch] All parallel attempts failed, trying sequential...');
     }
     
-    // Strategy 2: Sequential fallback with longer timeout (for restrictive networks)
-    // Try proxies one by one, prioritizing ones that worked before
-    for (const item of sortedProxies) {
+    // Strategy 2: Sequential fallback with longer timeout - try ALL proxies one by one
+    for (const proxy of sortedProxies) {
       try {
-        const result = await this._tryFetchWithProxy(item.proxy, item.index, url, this.SEQUENTIAL_TIMEOUT);
+        const result = await this._tryFetchWithProxy(proxy, url, this.SEQUENTIAL_TIMEOUT);
         if (result) {
-          console.log(`[Viewer Fetch] Sequential fallback succeeded with proxy ${item.index}`);
+          console.log(`[Viewer Fetch] Sequential fallback succeeded with ${proxy.id}`);
           return result;
         }
       } catch(e) {
@@ -1087,18 +1326,20 @@ class StreamApp {
       }
     }
     
-    // Strategy 3: Try alternative YouTube URL formats
+    // Strategy 3: Try alternative YouTube URL formats that might work differently through proxies
     const altUrls = [
-      `https://m.youtube.com/watch?v=${vidId}&t=${Date.now()}`,
-      `https://www.youtube.com/embed/${vidId}`,
+      `https://m.youtube.com/watch?v=${vidId}&hl=en&t=${Date.now()}`,
+      `https://www.youtube.com/watch?v=${vidId}&pbj=1&hl=en&t=${Date.now()}`,
     ];
     
     for (const altUrl of altUrls) {
-      for (const item of sortedProxies.slice(0, 2)) { // Only try top 2 proxies for alt URLs
+      // Only try top 2 performing proxies for alt URLs to save time
+      const topTwo = sortedProxies.slice(0, 2);
+      for (const proxy of topTwo) {
         try {
-          const result = await this._tryFetchWithProxy(item.proxy, item.index, altUrl, this.SEQUENTIAL_TIMEOUT);
+          const result = await this._tryFetchWithProxy(proxy, altUrl, this.SEQUENTIAL_TIMEOUT);
           if (result) {
-            console.log(`[Viewer Fetch] Alt URL fallback succeeded`);
+            console.log(`[Viewer Fetch] Alt URL fallback succeeded with ${proxy.id}`);
             return result;
           }
         } catch(e) {
@@ -1107,7 +1348,7 @@ class StreamApp {
       }
     }
     
-    console.error(`[Viewer Fetch] All fetch strategies failed for video ${vidId}`);
+    console.error(`[Viewer Fetch] All fetch strategies exhausted for video ${vidId}`);
     return null; 
   }
 
@@ -1150,7 +1391,7 @@ class StreamApp {
       } catch(e){} 
     } 
     
-    // Additional regex fallbacks for when JSON extraction partially fails
+    // Regex fallbacks for when JSON extraction partially fails
     if (!result.concurrentViewers && !result.viewCountText) { 
       const m1 = html.match(/"concurrentViewers"\s*:\s*"(\d+)"/i); 
       if (m1) { 
