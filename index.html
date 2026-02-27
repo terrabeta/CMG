@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>WIDE_MCR_TOOLS</title>
-
+    <title>1-WIDE_MCR_TOOLS</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
 :root{
@@ -197,14 +197,12 @@ a.ticker-item {
  padding-right: 40px;
  text-decoration: none;
  cursor: pointer;
- pointer-events: none; /* ADD THIS */
  pointer-events: none;
 }
 
 a.ticker-item.active {
  opacity: 1;
  transform: translateX(0);
- pointer-events: auto; /* ADD THIS */
  pointer-events: auto;
 }
 
@@ -229,17 +227,13 @@ a.ticker-item:hover {
 
 #main-container {flex: 1;display: flex;overflow: hidden;}
 
-div#main-container {
-    border-radius: 15px 15px 0px 0px;
-}
-
 #sidebar-left{
  height:100%;
  width: 40%;
  display:flex;
  flex-direction:column;
  background: var(--bg-secondary);
- border-right: 2px solid #00FC93;
+ border-left: 2px solid #00FC93;
  z-index:10;
 }
 
@@ -269,6 +263,17 @@ div#main-container {
 .badge-content span {display: inline-block;flex: 1;text-align: right;}
 .badge-content svg{width: 40px;height: 40px;fill: currentColor;opacity: 0.9;flex-shrink: 0;filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));}
 .viewer-badge:hover .badge-content svg {opacity: 1;filter: drop-shadow(0 0 8px currentColor);}
+
+/* Milestone Animation */
+@keyframes milestone-pop {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.3); filter: brightness(1.5) drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); background-color: #fff; color: #ff0505; }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+.milestone-active {
+  animation: milestone-pop 0.8s ease-in-out forwards;
+}
 
 .close-btn{height:100%;width: 48px;display:none;align-items:center;justify-content:center;background: rgba(255, 255, 255, 0.06);border:none;color: var(--text-secondary);font-size: 18px;font-weight: 400;cursor:pointer;flex-shrink:0;}
 .close-btn:hover{background: var(--accent-red);color: #fff;box-shadow: 0 0 20px rgba(255, 69, 58, 0.4);}
@@ -322,7 +327,7 @@ div#main-container {
     </style>
   </head>
   <body>
-
+    
     <div id="modal-overlay" aria-hidden="true">
       <div class="modal-box" role="dialog" aria-modal="true" aria-label="Enter Stream URL">
         <div class="modal-title">Add Stream</div>
@@ -333,8 +338,74 @@ div#main-container {
         </div>
       </div>
     </div>
-
+    
     <div id="main-container">
+      <main id="grid-right">
+        <div class="stream-card">
+          <div class="header-row">
+            <div class="card-header" onclick="window.app?.openModal('1')">
+              <span id="title-1" class="stream-title">Click to Add Stream</span>
+            </div>
+            <div id="badge-1" class="viewer-badge badge-1" aria-hidden="true">
+              <div id="badge-content-1" class="badge-content"><span>—</span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+            </div>
+            <button id="close-1" class="close-btn" onclick="window.app?.closeStream('1')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
+          </div>
+          <div class="video-container">
+            <div class="placeholder" id="ph-1" onclick="window.app?.openModal('1')"><h1>1</h1><p>Click to add stream</p></div>
+            <div id="player-1" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></div>
+          </div>
+        </div>
+        
+        <div class="stream-card">
+          <div class="header-row">
+            <div class="card-header" onclick="window.app?.openModal('2')">
+              <span id="title-2" class="stream-title">Click to Add Stream</span>
+            </div>
+            <div id="badge-2" class="viewer-badge badge-2" aria-hidden="true">
+              <div id="badge-content-2" class="badge-content"><span>—</span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+            </div>
+            <button id="close-2" class="close-btn" onclick="window.app?.closeStream('2')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
+          </div>
+          <div class="video-container">
+            <div class="placeholder" id="ph-2" onclick="window.app?.openModal('2')"><h1>2</h1><p>Click to add stream</p></div>
+            <div id="player-2" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></div>
+          </div>
+        </div>
+        
+        <div class="stream-card">
+          <div class="header-row">
+            <div class="card-header" onclick="window.app?.openModal('3')">
+              <span id="title-3" class="stream-title">Click to Add Stream</span>
+            </div>
+            <div id="badge-3" class="viewer-badge badge-3" aria-hidden="true">
+              <div id="badge-content-3" class="badge-content"><span>—</span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+            </div>
+            <button id="close-3" class="close-btn" onclick="window.app?.closeStream('3')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
+          </div>
+          <div class="video-container">
+            <div class="placeholder" id="ph-3" onclick="window.app?.openModal('3')"><h1>3</h1><p>Click to add stream</p></div>
+            <div id="player-3" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></div>
+          </div>
+        </div>
+        
+        <div class="stream-card">
+          <div class="header-row">
+            <div class="card-header" onclick="window.app?.openModal('4')">
+              <span id="title-4" class="stream-title">Click to Add Stream</span>
+            </div>
+            <div id="badge-4" class="viewer-badge badge-4" aria-hidden="true">
+              <div id="badge-content-4" class="badge-content"><span>—</span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+            </div>
+            <button id="close-4" class="close-btn" onclick="window.app?.closeStream('4')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
+          </div>
+          <div class="video-container">
+            <div class="placeholder" id="ph-4" onclick="window.app?.openModal('4')"><h1>4</h1><p>Click to add stream</p></div>
+            <div id="player-4" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></div>
+          </div>
+        </div>
+      </main>
+
       <aside id="sidebar-left">
         <div id="main-player-group">
           <div class="header-row">
@@ -366,74 +437,8 @@ div#main-container {
           </div>
         </div>
       </aside>
-
-      <main id="grid-right">
-        <div class="stream-card">
-          <div class="header-row">
-            <div class="card-header" onclick="window.app?.openModal('1')">
-              <span id="title-1" class="stream-title">Click to Add Stream</span>
-            </div>
-            <div id="badge-1" class="viewer-badge badge-1" aria-hidden="true">
-              <div id="badge-content-1" class="badge-content"><span>—</span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
-            </div>
-            <button id="close-1" class="close-btn" onclick="window.app?.closeStream('1')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
-          </div>
-          <div class="video-container">
-            <div class="placeholder" id="ph-1" onclick="window.app?.openModal('1')"><h1>1</h1><p>Click to add stream</p></div>
-            <div id="player-1" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></div>
-          </div>
-        </div>
-
-        <div class="stream-card">
-          <div class="header-row">
-            <div class="card-header" onclick="window.app?.openModal('2')">
-              <span id="title-2" class="stream-title">Click to Add Stream</span>
-            </div>
-            <div id="badge-2" class="viewer-badge badge-2" aria-hidden="true">
-              <div id="badge-content-2" class="badge-content"><span>—</span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
-            </div>
-            <button id="close-2" class="close-btn" onclick="window.app?.closeStream('2')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
-          </div>
-          <div class="video-container">
-            <div class="placeholder" id="ph-2" onclick="window.app?.openModal('2')"><h1>2</h1><p>Click to add stream</p></div>
-            <div id="player-2" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></div>
-          </div>
-        </div>
-
-        <div class="stream-card">
-          <div class="header-row">
-            <div class="card-header" onclick="window.app?.openModal('3')">
-              <span id="title-3" class="stream-title">Click to Add Stream</span>
-            </div>
-            <div id="badge-3" class="viewer-badge badge-3" aria-hidden="true">
-              <div id="badge-content-3" class="badge-content"><span>—</span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
-            </div>
-            <button id="close-3" class="close-btn" onclick="window.app?.closeStream('3')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
-          </div>
-          <div class="video-container">
-            <div class="placeholder" id="ph-3" onclick="window.app?.openModal('3')"><h1>3</h1><p>Click to add stream</p></div>
-            <div id="player-3" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></div>
-          </div>
-        </div>
-
-        <div class="stream-card">
-          <div class="header-row">
-            <div class="card-header" onclick="window.app?.openModal('4')">
-              <span id="title-4" class="stream-title">Click to Add Stream</span>
-            </div>
-            <div id="badge-4" class="viewer-badge badge-4" aria-hidden="true">
-              <div id="badge-content-4" class="badge-content"><span>—</span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
-            </div>
-            <button id="close-4" class="close-btn" onclick="window.app?.closeStream('4')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg></button>
-          </div>
-          <div class="video-container">
-            <div class="placeholder" id="ph-4" onclick="window.app?.openModal('4')"><h1>4</h1><p>Click to add stream</p></div>
-            <div id="player-4" style="display:none;position:absolute;top:0;left:0;width:100%;height:100%;"></div>
-          </div>
-        </div>
-      </main>
     </div>
-
+    
 <div id="news-ticker">
 <div class="ticker-icon">
   <svg class="ticker-wave wave-1" viewBox="0 0 57 33"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.9927 8.466C11.9927 8.466 38.1996 8.53197 38.2986 8.466C40.7065 6.96516 51.1464 0.829872 51.2454 0.829872C51.2619 0.829872 51.2948 0.829872 51.3113 0.829872H56.3581L43.1804 32.3969H37.375L40.756 24.7278C34.1094 24.7278 17.1549 24.6783 17.0725 24.7278C14.6645 26.2287 4.22463 32.3639 4.12567 32.3639C3.39999 32.3969 0.381826 32.3639 0.381826 32.3639C0.381826 32.3639 -0.145941 32.3804 0.0189858 32.0176C0.695187 30.5168 3.1526 24.7443 3.1526 24.7278C3.1526 24.7278 3.3835 24.0516 4.20814 24.0516C7.07787 24.0516 16.8416 24.0516 16.858 24.0516C16.858 24.0516 28.3865 17.537 29.8048 16.7453C29.9038 16.6794 39.4036 16.7124 44.2854 16.7453L47.6335 9.1422C43.7082 9.1422 38.4965 9.1422 38.4965 9.1422C38.4965 9.1422 26.9681 15.6568 25.5497 16.4485C25.4013 16.5309 8.21587 16.4485 8.21587 16.4485C7.55616 16.4485 7.27578 15.9207 7.58914 15.261L10.228 9.65347C10.5413 8.99377 11.3165 8.466 11.9762 8.466H11.9927Z" fill="#09613c"></path></svg>
@@ -448,8 +453,34 @@ div#main-container {
 </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
-
+    
     <script>
+/* ===== Promise.any Polyfill ===== */
+if (typeof Promise.any !== 'function') {
+  Promise.any = function(promises) {
+    return new Promise(function(resolve, reject) {
+      var errors = [];
+      var pending = 0;
+      var iterable = Array.from(promises);
+      if (iterable.length === 0) {
+        reject(new (typeof AggregateError === 'function' ? AggregateError : Error)('All promises were rejected'));
+        return;
+      }
+      pending = iterable.length;
+      iterable.forEach(function(promise, index) {
+        Promise.resolve(promise).then(resolve).catch(function(error) {
+          errors[index] = error;
+          pending--;
+          if (pending === 0) {
+            reject(new (typeof AggregateError === 'function' ? AggregateError : Error)('All promises were rejected'));
+          }
+        });
+      });
+    });
+  };
+}
+
+/* ===== News Ticker ===== */
 let tickerTitles = [];
 let tickerLinks = [];
 let currentTickerIndex = 0;
@@ -463,7 +494,7 @@ const HOLD_AFTER_SCROLL = 2500;
 const MIN_SCROLL_DURATION = 3000;
 const BASE_URL = 'https://www.athletiko.gr/latest-news';
 const MIN_WORD_COUNT = 3;
-const TICKER_FETCH_INTERVAL = 120000; // 2 minutes
+const TICKER_FETCH_INTERVAL = 120000;
 
 function countWords(str) {
   if (!str) return 0;
@@ -484,14 +515,11 @@ async function fetchNewsTicker() {
     url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
     url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
   ];
-
-  // Add cache-busting timestamp to URL
+  
   const urlWithCacheBust = `${BASE_URL}?_t=${fetchStartTime}`;
   
   for (const makeProxy of CORS_PROXIES) {
     try {
-      const res = await fetch(makeProxy(BASE_URL), { cache: 'no-store' });
-      if (!res.ok) continue;
       const proxyUrl = makeProxy(urlWithCacheBust);
       
       const res = await fetch(proxyUrl, { 
@@ -509,7 +537,7 @@ async function fetchNewsTicker() {
       }
       
       const html = await res.text();
-
+      
       if (!html || html.length < 500) {
         console.warn('Ticker received insufficient HTML data');
         continue;
@@ -517,12 +545,12 @@ async function fetchNewsTicker() {
       
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
-
+      
       const titles = [];
       const links = [];
-
+      
       const allAnchors = doc.querySelectorAll('a[href]');
-
+      
       allAnchors.forEach(anchor => {
         const h2 = anchor.querySelector('h2');
         if (h2) {
@@ -530,7 +558,7 @@ async function fetchNewsTicker() {
           if (text && text.length > 5 && text.length < 200 && countWords(text) >= MIN_WORD_COUNT && !titles.includes(text)) {
             const rawHref = anchor.getAttribute('href');
             let href = 'https://www.athletiko.gr';
-
+            
             if (rawHref) {
               if (rawHref.startsWith('http://') || rawHref.startsWith('https://')) {
                 href = rawHref;
@@ -542,13 +570,13 @@ async function fetchNewsTicker() {
                 href = 'https://www.athletiko.gr/' + rawHref;
               }
             }
-
+            
             titles.push(text);
             links.push(href);
           }
         }
       });
-
+      
       if (titles.length === 0) {
         const h2Elements = doc.querySelectorAll('h2');
         h2Elements.forEach(h2 => {
@@ -575,12 +603,8 @@ async function fetchNewsTicker() {
           }
         });
       }
-
+      
       if (titles.length > 0) {
-        tickerTitles = titles;
-        tickerLinks = links;
-        initTicker();
-        // Check if we have new content
         const hasNewContent = titles.some(title => !tickerTitles.includes(title));
         
         if (hasNewContent || tickerTitles.length === 0) {
@@ -597,12 +621,10 @@ async function fetchNewsTicker() {
         return;
       }
     } catch (e) {
-      console.warn('Ticker fetch error:', e);
       console.warn('Ticker fetch error:', e.message || e);
     }
   }
-
-  // Fallback only on first load
+  
   if (tickerTitles.length === 0) {
     console.warn('All ticker proxies failed, using fallback');
     tickerTitles = ['Sports News Updates', 'Live Match Coverage', 'Breaking Stories'];
@@ -616,10 +638,10 @@ async function fetchNewsTicker() {
 function initTicker() {
   const content = document.getElementById('ticker-content');
   if (!content || tickerTitles.length === 0) return;
-
+  
   content.innerHTML = '';
   content.classList.remove('has-overflow');
-
+  
   tickerTitles.forEach((title, i) => {
     const item = document.createElement('a');
     item.className = 'ticker-item';
@@ -630,42 +652,38 @@ function initTicker() {
     item.textContent = title;
     content.appendChild(item);
   });
-
+  
   showTickerItem(0);
 }
 
 function showTickerItem(index) {
   if (tickerTimeout) clearTimeout(tickerTimeout);
-
+  
   const content = document.getElementById('ticker-content');
   content.classList.remove('has-overflow');
-
+  
   document.querySelectorAll('.ticker-item').forEach(item => {
     item.classList.remove('active', 'exiting', 'scrolling');
     item.style.transform = 'translateX(30px)';
     item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
   });
-
+  
   currentTickerIndex = index;
-
+  
   const item = document.getElementById(`ticker-item-${index}`);
   if (!item || !content) return;
-
-  // Check overflow BEFORE showing item
+  
   const contentWidth = content.clientWidth - 48;
   const itemWidth = item.scrollWidth;
   const overflow = itemWidth - contentWidth;
-
-  // Show fade immediately if text overflows
+  
   if (overflow > 0) {
     content.classList.add('has-overflow');
   }
-
-  // Show item (slide in)
+  
   item.style.transform = 'translateX(0)';
   item.classList.add('active');
-
-  // Handle scrolling or static display
+  
   setTimeout(() => {
     if (overflow > 0) {
       handleLongText(item, overflow, content);
@@ -682,48 +700,42 @@ function handleLongText(item, overflow, content) {
     const scrollDistance = overflow + 30;
     const calculatedDuration = (scrollDistance / 80) * 1000;
     const scrollDuration = Math.max(MIN_SCROLL_DURATION, calculatedDuration);
-
+    
     item.classList.add('scrolling');
     item.style.transition = `transform ${scrollDuration}ms ease-in-out`;
     item.style.transform = `translateX(-${scrollDistance}px)`;
-
+    
     tickerTimeout = setTimeout(() => {
       tickerTimeout = setTimeout(() => {
         transitionToNext();
       }, HOLD_AFTER_SCROLL);
     }, scrollDuration);
-
+    
   }, HOLD_BEFORE_SCROLL);
 }
 
 function transitionToNext() {
   const content = document.getElementById('ticker-content');
-
+  
   const currentItem = document.getElementById(`ticker-item-${currentTickerIndex}`);
   if (currentItem) {
     currentItem.classList.remove('active', 'scrolling');
     currentItem.classList.add('exiting');
     currentItem.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
   }
-
-  // Remove fade during transition
+  
   content.classList.remove('has-overflow');
-
+  
   const nextIndex = (currentTickerIndex + 1) % tickerTitles.length;
-
+  
   setTimeout(() => {
     showTickerItem(nextIndex);
   }, 400);
 }
 
-// Initial fetch
 fetchNewsTicker();
-setInterval(fetchNewsTicker, 600000);
-
-// Fetch every 2 minutes
 setInterval(fetchNewsTicker, TICKER_FETCH_INTERVAL);
 
-// Also check for updates when page becomes visible again
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden && Date.now() - lastFetchTime > 60000) {
     console.log('Page became visible, checking for ticker updates...');
@@ -731,6 +743,7 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
+/* ===== YouTube IFrame API ===== */
 function onYouTubeIframeAPIReady() {
   if (window.app) {
     window.app.ytApiReady = true;
@@ -738,6 +751,7 @@ function onYouTubeIframeAPIReady() {
   }
 }
 
+/* ===== Main App ===== */
 class StreamApp {
   constructor() {
     this.modal = document.getElementById('modal-overlay');
@@ -749,15 +763,26 @@ class StreamApp {
     this.pendingLoads = [];
     this.currentUnmutedSlot = null;
     this.muteCheckInterval = null;
+    this.lastCounts = {};
     this.TARGET_QUALITY = 'hd720';
     this.STORAGE_KEY = 'streamCommandConfig';
     this.MIN_INTERVAL_MS = 4000;
-    this.FETCH_TIMEOUT = 6000;
+    this.FETCH_TIMEOUT = 10000; // Increased from 6s to 10s for slower networks
+    this.SEQUENTIAL_TIMEOUT = 12000; // Longer timeout for sequential fallback
+    
+    // Expanded proxy list for better network coverage
     this.CORS_PROXIES = [
       url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
       url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-      url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+      url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+      url => `https://thingproxy.freeboard.io/fetch/${url}`,
+      url => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}&callback=`,
     ];
+
+    // Track which proxies work per-session for smarter retry
+    this.proxyHealth = {};
+    this.CORS_PROXIES.forEach((_, i) => { this.proxyHealth[i] = { successes: 0, failures: 0, lastSuccess: 0 }; });
+
     this.userIconSVG = '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
     this.loadConfig();
   }
@@ -865,21 +890,306 @@ class StreamApp {
 
   async fetchChannelName(videoUrl, slot) { try { const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`); const data = await res.json(); const titleEl = document.getElementById(`title-${slot}`); if (!titleEl) return; if (data.author_name) { titleEl.innerText = data.author_name; titleEl.style.color = 'var(--text-primary)'; } else { titleEl.innerText = 'YouTube Channel'; titleEl.style.color = 'var(--text-secondary)'; } this.saveConfig(); } catch (e) { const titleEl = document.getElementById(`title-${slot}`); if (titleEl) { titleEl.innerText = 'Connected'; titleEl.style.color = 'var(--text-secondary)'; } this.saveConfig(); } }
 
-  _ensureSlotState(slot) { if (!this.slotStates[slot]) { this.slotStates[slot] = { vidId: null, timerId: null, lastFetchTime: 0, fetching: false, realtimeActive: false, originalUrl: null }; } }
-  _startRealtimeLoop(slot) { this._ensureSlotState(slot); this.slotStates[slot].realtimeActive = true; this._fetchAndUpdate(slot).finally(() => this._scheduleNextFetch(slot)); }
+  _ensureSlotState(slot) { if (!this.slotStates[slot]) { this.slotStates[slot] = { vidId: null, timerId: null, lastFetchTime: 0, fetching: false, realtimeActive: false, originalUrl: null, consecutiveFailures: 0 }; } }
+  
+  _startRealtimeLoop(slot) { 
+    this._ensureSlotState(slot); 
+    this.slotStates[slot].realtimeActive = true; 
+    this.slotStates[slot].consecutiveFailures = 0;
+    this._fetchAndUpdate(slot).finally(() => this._scheduleNextFetch(slot)); 
+  }
+  
   _stopRealtimeLoop(slot) { const st = this.slotStates[slot]; if (!st) return; st.realtimeActive = false; if (st.timerId) { clearTimeout(st.timerId); st.timerId = null; } }
-  _scheduleNextFetch(slot) { const st = this.slotStates[slot]; if (!st || !st.realtimeActive) return; const elapsed = st.lastFetchTime ? (Date.now() - st.lastFetchTime) : this.MIN_INTERVAL_MS; const wait = Math.max(0, this.MIN_INTERVAL_MS - elapsed); st.timerId = setTimeout(async () => { if (!st.realtimeActive) return; await this._fetchAndUpdate(slot); this._scheduleNextFetch(slot); }, wait); }
+  
+  _scheduleNextFetch(slot) { 
+    const st = this.slotStates[slot]; 
+    if (!st || !st.realtimeActive) return; 
+    
+    // Dynamic interval: back off on consecutive failures, min 4s, max 30s
+    let interval = this.MIN_INTERVAL_MS;
+    if (st.consecutiveFailures > 0) {
+      interval = Math.min(30000, this.MIN_INTERVAL_MS * Math.pow(1.5, st.consecutiveFailures));
+    }
+    
+    const elapsed = st.lastFetchTime ? (Date.now() - st.lastFetchTime) : interval; 
+    const wait = Math.max(0, interval - elapsed); 
+    st.timerId = setTimeout(async () => { 
+      if (!st.realtimeActive) return; 
+      await this._fetchAndUpdate(slot); 
+      this._scheduleNextFetch(slot); 
+    }, wait); 
+  }
 
-  async _fetchAndUpdate(slot) { const st = this.slotStates[slot]; if (!st || !st.vidId || st.fetching) return; st.fetching = true; try { const html = await this._fetchYouTubePage(st.vidId); st.lastFetchTime = Date.now(); if (!html) { this._updateBadgeText(slot, '—'); return; } const data = this._extractViewerData(html); let num = null; if (data.concurrentViewers) num = this._parseNumber(data.concurrentViewers); else if (data.viewCountText) num = this._parseNumber(data.viewCountText); else if (data.totalViews) num = this._parseNumber(data.totalViews); if (num !== null && !isNaN(num)) { this._updateBadgeText(slot, this._formatNumber(num)); } else if (data.viewCountText) { this._updateBadgeText(slot, data.viewCountText.replace(/\s+$/,'').replace(/watching.*/i,'').trim()); } else { this._updateBadgeText(slot, '—'); } } catch (e) { this._updateBadgeText(slot, '—'); } finally { st.fetching = false; } }
+  async _fetchAndUpdate(slot) { 
+    const st = this.slotStates[slot]; 
+    if (!st || !st.vidId || st.fetching) return; 
+    st.fetching = true; 
+    
+    try { 
+      const html = await this._fetchYouTubePage(st.vidId); 
+      st.lastFetchTime = Date.now(); 
+      
+      if (!html) { 
+        st.consecutiveFailures = (st.consecutiveFailures || 0) + 1;
+        if (st.consecutiveFailures <= 2) {
+          // Don't clear badge on first few failures - keep last known value
+          console.warn(`[Slot ${slot}] Fetch failed (attempt ${st.consecutiveFailures}), keeping last value`);
+        } else {
+          this._updateBadgeText(slot, '—'); 
+          console.warn(`[Slot ${slot}] Fetch failed ${st.consecutiveFailures} times, showing dash`);
+        }
+        return; 
+      } 
+      
+      // Reset failure counter on success
+      st.consecutiveFailures = 0;
+      
+      const data = this._extractViewerData(html); 
+      
+      let num = null; 
+      
+      if (data.isLiveNow) {
+          if (data.concurrentViewers) {
+             num = this._parseNumber(data.concurrentViewers); 
+          } else if (data.viewCountText && /watching/i.test(data.viewCountText)) {
+             num = this._parseNumber(data.viewCountText);
+          }
+      }
+      
+      if (num !== null && !isNaN(num)) { 
+        this._updateBadgeText(slot, this._formatNumber(num));
+        
+        if (slot === 'main') {
+          const prev = this.lastCounts[slot] || 0;
+          const currentThousand = Math.floor(num / 1000);
+          const prevThousand = Math.floor(prev / 1000);
+          
+          if (prev > 0 && currentThousand > prevThousand) {
+             this.triggerMilestoneAnim();
+          }
+          this.lastCounts[slot] = num;
+        }
+      } else { 
+        this._updateBadgeText(slot, '—');
+      } 
+      
+    } catch (e) { 
+      st.consecutiveFailures = (st.consecutiveFailures || 0) + 1;
+      if (st.consecutiveFailures > 2) {
+        this._updateBadgeText(slot, '—'); 
+      }
+      console.warn(`[Slot ${slot}] Fetch error:`, e.message || e);
+    } finally { 
+      st.fetching = false; 
+    } 
+  }
+
+  triggerMilestoneAnim() {
+    const badge = document.getElementById('badge-main');
+    if (!badge) return;
+    badge.classList.remove('milestone-active');
+    void badge.offsetWidth;
+    badge.classList.add('milestone-active');
+  }
 
   _updateBadgeText(slot, numText) { const container = document.getElementById(`badge-content-${slot}`); if (!container) return; container.innerHTML = `<span>${this._escapeHtml(String(numText))}</span>${this.userIconSVG}`; }
-  _escapeHtml(s) { return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]); }
+  
+  _escapeHtml(s) { 
+    const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+    return s.replace(/[&<>"']/g, function(m) { return map[m]; }); 
+  }
 
-  async _fetchYouTubePage(vidId) { const url = `https://www.youtube.com/watch?v=${vidId}&t=${Date.now()}`; const promises = this.CORS_PROXIES.map(makeProxy => new Promise(async (resolve, reject) => { const proxy = makeProxy(url); const controller = new AbortController(); const to = setTimeout(() => controller.abort(), this.FETCH_TIMEOUT); try { const res = await fetch(proxy, { signal: controller.signal, headers: { 'Accept': 'text/html' }, cache: 'no-store' }); clearTimeout(to); if (!res.ok) return reject(); const text = await res.text(); if (!text || text.length < 800 || (!text.includes('ytInitialData') && !text.includes('ytInitialPlayerResponse'))) return reject(); return resolve(text); } catch (err) { clearTimeout(to); return reject(err); } })); try { return typeof Promise.any === 'function' ? await Promise.any(promises) : null; } catch (e) { return null; } }
+  // Sort proxies by health score (most successful first)
+  _getSortedProxies() {
+    const indexed = this.CORS_PROXIES.map((proxy, i) => ({ proxy, index: i, health: this.proxyHealth[i] }));
+    indexed.sort((a, b) => {
+      const scoreA = a.health.successes - a.health.failures * 2 + (a.health.lastSuccess > 0 ? 1 : 0);
+      const scoreB = b.health.successes - b.health.failures * 2 + (b.health.lastSuccess > 0 ? 1 : 0);
+      return scoreB - scoreA;
+    });
+    return indexed;
+  }
+
+  async _tryFetchWithProxy(proxyFn, proxyIndex, url, timeout) {
+    const proxyUrl = proxyFn(url);
+    const controller = new AbortController();
+    const to = setTimeout(() => controller.abort(), timeout);
+    
+    try {
+      const res = await fetch(proxyUrl, { 
+        signal: controller.signal, 
+        headers: { 'Accept': 'text/html,application/xhtml+xml' }, 
+        cache: 'no-store' 
+      });
+      clearTimeout(to);
+      
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      
+      let text = await res.text();
+      
+      // Handle allorigins /get endpoint which wraps in JSON
+      if (proxyUrl.includes('/get?url=') && text.startsWith('{')) {
+        try {
+          const json = JSON.parse(text);
+          if (json.contents) text = json.contents;
+        } catch(e) {}
+      }
+      
+      if (!text || text.length < 800 || 
+          (!text.includes('ytInitialData') && !text.includes('ytInitialPlayerResponse'))) {
+        throw new Error('Invalid YouTube response (missing data)');
+      }
+      
+      // Track success
+      if (this.proxyHealth[proxyIndex]) {
+        this.proxyHealth[proxyIndex].successes++;
+        this.proxyHealth[proxyIndex].lastSuccess = Date.now();
+      }
+      
+      return text;
+    } catch (err) {
+      clearTimeout(to);
+      // Track failure
+      if (this.proxyHealth[proxyIndex]) {
+        this.proxyHealth[proxyIndex].failures++;
+      }
+      throw err;
+    }
+  }
+
+  async _fetchYouTubePage(vidId) { 
+    const url = `https://www.youtube.com/watch?v=${vidId}&t=${Date.now()}`; 
+    const sortedProxies = this._getSortedProxies();
+    
+    // Strategy 1: Race all proxies in parallel (fastest wins)
+    const promises = sortedProxies.map(item => 
+      this._tryFetchWithProxy(item.proxy, item.index, url, this.FETCH_TIMEOUT)
+    );
+    
+    try { 
+      const result = await Promise.any(promises);
+      if (result) return result;
+    } catch (e) { 
+      console.warn('[Viewer Fetch] All parallel proxy attempts failed, trying sequential fallback...');
+    }
+    
+    // Strategy 2: Sequential fallback with longer timeout (for restrictive networks)
+    // Try proxies one by one, prioritizing ones that worked before
+    for (const item of sortedProxies) {
+      try {
+        const result = await this._tryFetchWithProxy(item.proxy, item.index, url, this.SEQUENTIAL_TIMEOUT);
+        if (result) {
+          console.log(`[Viewer Fetch] Sequential fallback succeeded with proxy ${item.index}`);
+          return result;
+        }
+      } catch(e) {
+        // Continue to next proxy
+      }
+    }
+    
+    // Strategy 3: Try alternative YouTube URL formats
+    const altUrls = [
+      `https://m.youtube.com/watch?v=${vidId}&t=${Date.now()}`,
+      `https://www.youtube.com/embed/${vidId}`,
+    ];
+    
+    for (const altUrl of altUrls) {
+      for (const item of sortedProxies.slice(0, 2)) { // Only try top 2 proxies for alt URLs
+        try {
+          const result = await this._tryFetchWithProxy(item.proxy, item.index, altUrl, this.SEQUENTIAL_TIMEOUT);
+          if (result) {
+            console.log(`[Viewer Fetch] Alt URL fallback succeeded`);
+            return result;
+          }
+        } catch(e) {
+          // Continue
+        }
+      }
+    }
+    
+    console.error(`[Viewer Fetch] All fetch strategies failed for video ${vidId}`);
+    return null; 
+  }
 
   _extractEmbeddedJSON(html, varName) { if (!html || !varName) return null; const idx = html.indexOf(varName); if (idx === -1) return null; let start = html.indexOf('{', idx); if (start === -1) return null; let depth = 0, inStr = false, esc = false; for (let i = start; i < html.length; i++) { const ch = html[i]; if (esc) { esc = false; continue; } if (ch === '\\') { esc = true; continue; } if (ch === '"') { inStr = !inStr; continue; } if (inStr) continue; if (ch === '{') depth++; else if (ch === '}') { depth--; if (depth === 0) { try { return JSON.parse(html.substring(start, i+1)); } catch(e){ return null; } } } } return null; }
 
-  _extractViewerData(html) { const result = { concurrentViewers: null, totalViews: null, isLive: false, isLiveNow: false, title: null, viewCountText: null }; let pr = this._extractEmbeddedJSON(html, 'ytInitialPlayerResponse'); if (!pr) pr = this._extractEmbeddedJSON(html, 'window["ytInitialPlayerResponse"]') || this._extractEmbeddedJSON(html, 'window.ytInitialPlayerResponse'); if (pr) { const vd = pr.videoDetails; if (vd) { result.title = vd.title || null; result.totalViews = vd.viewCount || null; result.isLive = !!vd.isLive || !!vd.isLiveContent; } const lbd = pr?.microformat?.playerMicroformatRenderer?.liveBroadcastDetails; if (lbd) { if (lbd.concurrentViewers) result.concurrentViewers = lbd.concurrentViewers; result.isLiveNow = !!lbd.isLiveNow || result.isLive; } } const init = this._extractEmbeddedJSON(html, 'ytInitialData'); if (init) { try { const contents = init?.contents?.twoColumnWatchNextResults?.results?.results?.contents; if (contents && Array.isArray(contents)) { for (const item of contents) { const vcr = item?.videoPrimaryInfoRenderer?.viewCount?.videoViewCountRenderer; if (vcr) { if (vcr.viewCount?.simpleText) result.viewCountText = vcr.viewCount.simpleText; else if (vcr.viewCount?.runs) result.viewCountText = vcr.viewCount.runs.map(r=>r.text).join(''); if (vcr.isLive) result.isLiveNow = true; } } } } catch(e){} } if (!result.concurrentViewers && !result.viewCountText) { const m1 = html.match(/"concurrentViewers"\s*:\s*"(\d+)"/i); if (m1) { result.concurrentViewers = m1[1]; result.isLiveNow = true; } } return result; }
+  _extractViewerData(html) { 
+    const result = { concurrentViewers: null, totalViews: null, isLive: false, isLiveNow: false, title: null, viewCountText: null }; 
+    
+    let pr = this._extractEmbeddedJSON(html, 'ytInitialPlayerResponse'); 
+    if (!pr) pr = this._extractEmbeddedJSON(html, 'window["ytInitialPlayerResponse"]') || this._extractEmbeddedJSON(html, 'window.ytInitialPlayerResponse'); 
+    
+    if (pr) { 
+      const vd = pr.videoDetails; 
+      if (vd) { 
+        result.title = vd.title || null; 
+        result.totalViews = vd.viewCount || null; 
+        result.isLive = !!vd.isLive || !!vd.isLiveContent; 
+      } 
+      const lbd = pr?.microformat?.playerMicroformatRenderer?.liveBroadcastDetails; 
+      if (lbd) { 
+        if (lbd.concurrentViewers) result.concurrentViewers = lbd.concurrentViewers; 
+        result.isLiveNow = !!lbd.isLiveNow || result.isLive; 
+      } 
+    } 
+    
+    const init = this._extractEmbeddedJSON(html, 'ytInitialData'); 
+    if (init) { 
+      try { 
+        const contents = init?.contents?.twoColumnWatchNextResults?.results?.results?.contents; 
+        if (contents && Array.isArray(contents)) { 
+          for (const item of contents) { 
+            const vcr = item?.videoPrimaryInfoRenderer?.viewCount?.videoViewCountRenderer; 
+            if (vcr) { 
+              if (vcr.viewCount?.simpleText) result.viewCountText = vcr.viewCount.simpleText; 
+              else if (vcr.viewCount?.runs) result.viewCountText = vcr.viewCount.runs.map(r=>r.text).join(''); 
+              if (vcr.isLive) result.isLiveNow = true; 
+            } 
+          } 
+        } 
+      } catch(e){} 
+    } 
+    
+    // Additional regex fallbacks for when JSON extraction partially fails
+    if (!result.concurrentViewers && !result.viewCountText) { 
+      const m1 = html.match(/"concurrentViewers"\s*:\s*"(\d+)"/i); 
+      if (m1) { 
+        result.concurrentViewers = m1[1]; 
+        result.isLiveNow = true; 
+      } 
+    }
+    
+    // Extra fallback: look for "X watching now" text patterns
+    if (!result.concurrentViewers && !result.viewCountText) {
+      const m2 = html.match(/([\d,.\s]+)\s*watching\s*now/i);
+      if (m2) {
+        result.viewCountText = m2[0];
+        result.isLiveNow = true;
+      }
+    }
+    
+    // Fallback: check for isLiveNow in raw HTML if JSON extraction missed it
+    if (!result.isLiveNow && !result.isLive) {
+      if (html.includes('"isLiveNow":true') || html.includes('"isLive":true') || html.includes('"isLiveContent":true')) {
+        result.isLiveNow = true;
+        result.isLive = true;
+      }
+    }
+    
+    // If we know it's live but don't have concurrent viewers yet, try more patterns
+    if (result.isLiveNow && !result.concurrentViewers) {
+      const m3 = html.match(/"viewCount"\s*:\s*\{\s*"simpleText"\s*:\s*"([^"]*watching[^"]*)"/i);
+      if (m3) {
+        result.viewCountText = m3[1];
+      }
+      const m4 = html.match(/"text"\s*:\s*"([\d,.\s]+)"\s*\}\s*,\s*\{\s*"text"\s*:\s*"\s*watching/i);
+      if (m4) {
+        result.viewCountText = m4[1] + ' watching now';
+      }
+    }
+    
+    return result; 
+  }
 
   _parseNumber(s) { if (s == null) return null; const m = String(s).match(/([\d.,]+)/); if (!m) return null; const digits = m[1].replace(/[^\d]/g, ''); return digits ? parseInt(digits, 10) : null; }
   _formatNumber(n) { if (typeof n !== 'number') n = Number(n) || 0; return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
