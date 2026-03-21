@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>WIDE_MCR_TOOLS_CMG</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>COMP_WIDE_MCR_TOOLS_V1</title>
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
@@ -40,17 +40,20 @@
                 --anim-fast: 0.1s ease-in-out;
                 --anim-med: 0.2s ease-in-out;
             }
+
             * {
                 box-sizing: border-box;
                 margin: 0;
                 padding: 0;
                 transition: all var(--anim);
             }
+
             html,
             body {
                 height: 100%;
                 width: 100%;
             }
+
             body {
                 padding: 28px;
                 background: var(--bg-color);
@@ -72,9 +75,8 @@
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
-            /* ==========================================
-   NEWS TICKER STYLES
-   ========================================== */
+
+            /* ========================================== NEWS TICKER STYLES ========================================== */
             #news-ticker {
                 width: 100%;
                 height: var(--crawl-height);
@@ -87,21 +89,20 @@
                 z-index: 100;
                 border-top: 2px solid var(--accent-crawl);
             }
-            /* ==========================================
-   TICKER FLASH ANIMATION - SMOOTH BLINK
-   ========================================== */
-            /* ==========================================
-   TICKER FLASH ANIMATION - DOUBLE FADE BLINK
-   ========================================== */
+
+            /* ========================================== TICKER FLASH ANIMATION - SMOOTH BLINK ========================================== */
+            /* ========================================== TICKER FLASH ANIMATION - DOUBLE FADE BLINK ========================================== */
             @keyframes tickerBlink {
                 0%,
                 100% {
                     background: linear-gradient(90deg, #111 0%, #0a0a0a 50%, #111 100%);
                 }
+
                 25%,
                 75% {
                     background: #00fc93;
                 }
+
                 50% {
                     background: linear-gradient(90deg, #111 0%, #0a0a0a 50%, #111 100%);
                 }
@@ -113,11 +114,13 @@
                     color: #fff;
                     text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
                 }
+
                 25%,
                 75% {
                     color: #000;
                     text-shadow: none;
                 }
+
                 50% {
                     color: #fff;
                     text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
@@ -129,10 +132,12 @@
                 100% {
                     background: rgba(0, 30, 18, 0.4);
                 }
+
                 25%,
                 75% {
                     background: rgba(0, 252, 147, 0.8);
                 }
+
                 50% {
                     background: rgba(0, 30, 18, 0.4);
                 }
@@ -144,11 +149,13 @@
                     filter: drop-shadow(0 0 8px rgba(0, 252, 147, 0.6));
                     transform: scale(1);
                 }
+
                 25%,
                 75% {
                     filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.9));
                     transform: scale(1.05);
                 }
+
                 50% {
                     filter: drop-shadow(0 0 8px rgba(0, 252, 147, 0.6));
                     transform: scale(1);
@@ -170,6 +177,7 @@
             #news-ticker.flash .ticker-icon .ticker-logo {
                 animation: tickerLogoBlink 0.8s ease-in-out;
             }
+
             .ticker-icon {
                 display: flex;
                 align-items: center;
@@ -182,6 +190,7 @@
                 position: relative;
                 overflow: hidden;
             }
+
             .ticker-icon .ticker-logo {
                 width: 53px;
                 height: 53px;
@@ -190,6 +199,7 @@
                 position: relative;
                 z-index: 2;
             }
+
             .ticker-icon .ticker-wave {
                 position: absolute;
                 width: 53px;
@@ -198,34 +208,42 @@
                 pointer-events: none;
                 animation: svgPulse 8s ease-out infinite;
             }
+
             .ticker-icon .wave-1 {
                 animation-delay: 0s;
             }
+
             .ticker-icon .wave-2 {
                 animation-delay: -2s;
             }
+
             .ticker-icon .wave-3 {
                 animation-delay: -4s;
             }
+
             .ticker-icon .wave-4 {
                 animation-delay: -6s;
             }
+
             @keyframes svgPulse {
                 0% {
                     transform: scale(1);
                     opacity: 0.6;
                     filter: blur(0px);
                 }
+
                 50% {
                     opacity: 0.3;
                     filter: blur(3px);
                 }
+
                 100% {
                     transform: scale(6);
                     opacity: 0;
                     filter: blur(8px);
                 }
             }
+
             .ticker-content {
                 flex: 1;
                 overflow: hidden;
@@ -235,6 +253,7 @@
                 align-items: center;
                 padding: 0 20px;
             }
+
             .ticker-content::after {
                 content: "";
                 position: absolute;
@@ -256,9 +275,11 @@
                 opacity: 0;
                 transition: opacity 0.2s ease;
             }
+
             .ticker-content.has-overflow::after {
                 opacity: 1;
             }
+
             a.ticker-item {
                 position: absolute;
                 white-space: nowrap;
@@ -278,31 +299,35 @@
                 cursor: pointer;
                 pointer-events: none;
             }
+
             a.ticker-item.active {
                 opacity: 1;
                 transform: translateX(0);
                 pointer-events: auto;
             }
+
             a.ticker-item.exiting {
                 opacity: 0;
                 transform: translateX(-30px);
             }
+
             a.ticker-item:hover {
                 color: var(--accent-crawl);
             }
+
             .ticker-loading {
                 font-size: 16px;
                 color: rgba(255, 255, 255, 0.5);
                 font-style: italic;
             }
-            /* ==========================================
-   MAIN LAYOUT STYLES
-   ========================================== */
+
+            /* ========================================== MAIN LAYOUT STYLES ========================================== */
             #main-container {
                 flex: 1;
                 display: flex;
                 overflow: hidden;
             }
+
             #sidebar-left {
                 height: 100%;
                 width: 40%;
@@ -313,6 +338,7 @@
                 z-index: 10;
                 overflow: visible;
             }
+
             #main-player-group {
                 width: 100%;
                 display: flex;
@@ -322,6 +348,7 @@
                 z-index: 60;
                 overflow: visible;
             }
+
             #main-video-frame {
                 width: 100%;
                 height: 233px;
@@ -329,9 +356,8 @@
                 background: #000;
                 overflow: visible;
             }
-            /* ==========================================
-   MAIN PLAYER DROPDOWN (Specific)
-   ========================================== */
+
+            /* ========================================== MAIN PLAYER DROPDOWN (Specific) ========================================== */
             #main-video-frame .stream-dropdown-wrapper {
                 position: absolute;
                 top: 0;
@@ -342,6 +368,7 @@
                 z-index: 100;
                 overflow: visible;
             }
+
             #main-video-frame .stream-dropdown {
                 z-index: 101;
                 position: relative;
@@ -353,18 +380,22 @@
                     border-radius 0.2s ease,
                     background 0.2s ease;
             }
+
             #main-video-frame .stream-dropdown.open {
                 border-radius: var(--radius-md) var(--radius-md) 0 0;
                 background: rgba(30, 30, 30, 0.98);
             }
+
             #main-video-frame .stream-dropdown .dropdown-header {
                 border-bottom: none;
                 border-radius: var(--radius-md);
             }
+
             #main-video-frame .stream-dropdown.open .dropdown-header {
                 border-bottom: 1px solid var(--glass-border);
                 border-radius: var(--radius-md) var(--radius-md) 0 0;
             }
+
             #main-video-frame .stream-dropdown .dropdown-list {
                 position: absolute;
                 top: 100%;
@@ -385,6 +416,7 @@
                     visibility 0.2s;
                 z-index: 102;
             }
+
             #main-video-frame .stream-dropdown.open .dropdown-list {
                 opacity: 1;
                 visibility: visible;
@@ -394,9 +426,11 @@
                 padding-bottom: 1px;
                 box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             }
+
             #main-video-frame .stream-dropdown.open .dropdown-header {
                 border-radius: var(--radius-md) var(--radius-md) 0 0;
             }
+
             #chat-wrapper {
                 flex: 1;
                 background: var(--bg-secondary);
@@ -406,6 +440,7 @@
                 overflow: hidden;
                 z-index: 1;
             }
+
             #grid-right {
                 flex: 1;
                 height: 100%;
@@ -415,9 +450,8 @@
                 background: var(--bg-color);
                 gap: 0;
             }
-            /* ==========================================
-   STREAM CARD STYLES
-   ========================================== */
+
+            /* ========================================== STREAM CARD STYLES ========================================== */
             .stream-card {
                 background: var(--bg-secondary);
                 display: flex;
@@ -426,10 +460,12 @@
                 height: 100%;
                 overflow: hidden;
             }
+
             .stream-card:hover {
                 z-index: 5;
                 background: #111;
             }
+
             .header-row {
                 display: flex;
                 width: 100%;
@@ -440,9 +476,11 @@
                 position: relative;
                 overflow: hidden;
             }
+
             .header-row:hover {
                 background: rgba(60, 60, 62, 0.75);
             }
+
             .card-header {
                 height: 100%;
                 background: transparent;
@@ -457,12 +495,15 @@
                 position: relative;
                 overflow: hidden;
             }
+
             .card-header:hover {
                 background: rgba(255, 255, 255, 0.08);
             }
+
             .card-header:active {
                 background: rgba(255, 255, 255, 0.12);
             }
+
             .stream-title {
                 font-family:
                     "Inter",
@@ -481,13 +522,13 @@
                 text-align: center;
                 text-shadow: 0 0 0 transparent;
             }
+
             .card-header:hover .stream-title {
                 color: var(--text-primary);
                 text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             }
-            /* ==========================================
-   VIEWER BADGE STYLES
-   ========================================== */
+
+            /* ========================================== VIEWER BADGE STYLES ========================================== */
             .viewer-badge {
                 height: 100%;
                 display: none;
@@ -500,14 +541,17 @@
                 position: relative;
                 overflow: hidden;
             }
+
             .viewer-badge:hover {
                 filter: brightness(1.15);
                 box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.1);
             }
+
             .badge-main {
                 background: #ff0505;
                 color: #fff;
             }
+
             .badge-1,
             .badge-2,
             .badge-3,
@@ -515,6 +559,7 @@
                 background: #b8b8b8;
                 color: #1a1a1a;
             }
+
             .badge-content {
                 display: flex;
                 align-items: center;
@@ -528,11 +573,13 @@
                 text-align: right;
                 text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             }
+
             .badge-content span {
                 display: inline-block;
                 flex: 1;
                 text-align: right;
             }
+
             .badge-content svg {
                 width: 40px;
                 height: 40px;
@@ -541,44 +588,54 @@
                 flex-shrink: 0;
                 filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
             }
-            /* ==========================================
-   MILESTONE CELEBRATION ANIMATION
-   ========================================== */
+
+            /* ========================================== MILESTONE CELEBRATION ANIMATION ========================================== */
             @keyframes milestoneFlash {
                 0% {
                     background: #ff0505;
                 }
+
                 10% {
                     background: #ffd700;
                 }
+
                 20% {
                     background: #ff6b00;
                 }
+
                 30% {
                     background: #fff;
                 }
+
                 40% {
                     background: #ffd700;
                 }
+
                 50% {
                     background: #ff6b00;
                 }
+
                 60% {
                     background: #fff;
                 }
+
                 70% {
                     background: #ffd700;
                 }
+
                 80% {
                     background: #ff6b00;
                 }
+
                 90% {
                     background: #ffd700;
                 }
+
                 100% {
                     background: #ff0505;
                 }
             }
+
             @keyframes milestoneBurst {
                 0% {
                     box-shadow:
@@ -586,24 +643,28 @@
                         0 0 0 0 rgba(255, 107, 0, 0.6),
                         0 0 0 0 rgba(255, 255, 255, 0.4);
                 }
+
                 25% {
                     box-shadow:
                         0 0 20px 10px rgba(255, 215, 0, 0.8),
                         0 0 40px 20px rgba(255, 107, 0, 0.6),
                         0 0 60px 30px rgba(255, 255, 255, 0.3);
                 }
+
                 50% {
                     box-shadow:
                         0 0 30px 15px rgba(255, 255, 255, 0.9),
                         0 0 60px 30px rgba(255, 215, 0, 0.7),
                         0 0 90px 45px rgba(255, 107, 0, 0.4);
                 }
+
                 75% {
                     box-shadow:
                         0 0 15px 8px rgba(255, 215, 0, 0.6),
                         0 0 30px 15px rgba(255, 107, 0, 0.4),
                         0 0 45px 22px rgba(255, 255, 255, 0.2);
                 }
+
                 100% {
                     box-shadow:
                         0 0 0 0 rgba(255, 215, 0, 0),
@@ -611,41 +672,51 @@
                         0 0 0 0 rgba(255, 255, 255, 0);
                 }
             }
+
             @keyframes milestoneScale {
                 0% {
                     transform: scale(1);
                 }
+
                 15% {
                     transform: scale(1.12);
                 }
+
                 30% {
                     transform: scale(0.95);
                 }
+
                 45% {
                     transform: scale(1.08);
                 }
+
                 60% {
                     transform: scale(0.98);
                 }
+
                 75% {
                     transform: scale(1.04);
                 }
+
                 100% {
                     transform: scale(1);
                 }
             }
+
             @keyframes milestoneTextFlash {
                 0%,
                 100% {
                     color: #fff;
                     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
                 }
+
                 15%,
                 45%,
                 75% {
                     color: #1a1a1a;
                     text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
                 }
+
                 30%,
                 60% {
                     color: #fff;
@@ -655,22 +726,27 @@
                         0 0 30px rgba(255, 107, 0, 0.6);
                 }
             }
+
             @keyframes milestoneShine {
                 0% {
                     left: -100%;
                     opacity: 0;
                 }
+
                 20% {
                     opacity: 1;
                 }
+
                 80% {
                     opacity: 1;
                 }
+
                 100% {
                     left: 200%;
                     opacity: 0;
                 }
             }
+
             .badge-main.celebrating {
                 animation:
                     milestoneFlash 1.5s ease-in-out,
@@ -678,6 +754,7 @@
                     milestoneScale 1s ease-in-out;
                 z-index: 100;
             }
+
             .badge-main.celebrating::before {
                 content: "";
                 position: absolute;
@@ -696,6 +773,7 @@
                 animation: milestoneShine 0.6s ease-out 0.2s;
                 pointer-events: none;
             }
+
             .badge-main.celebrating::after {
                 content: "";
                 position: absolute;
@@ -714,12 +792,12 @@
                 animation: milestoneShine 0.6s ease-out 0.5s;
                 pointer-events: none;
             }
+
             .badge-main.celebrating .badge-content {
                 animation: milestoneTextFlash 1.5s ease-in-out;
             }
-            /* ==========================================
-   CLOSE BUTTON STYLES
-   ========================================== */
+
+            /* ========================================== CLOSE BUTTON STYLES ========================================== */
             .close-btn {
                 height: 100%;
                 width: 48px;
@@ -734,33 +812,38 @@
                 cursor: pointer;
                 flex-shrink: 0;
             }
+
             .close-btn:hover {
                 background: var(--accent-red);
                 color: #fff;
                 box-shadow: 0 0 20px rgba(255, 69, 58, 0.4);
             }
+
             .close-btn:active {
                 opacity: 0.8;
             }
+
             .close-btn svg {
                 filter: drop-shadow(0 0 0 transparent);
             }
+
             .close-btn:hover svg {
                 transform: rotate(90deg);
                 filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
             }
-            /* ==========================================
-   VIDEO CONTAINER STYLES
-   ========================================== */
+
+            /* ========================================== VIDEO CONTAINER STYLES ========================================== */
             .video-container {
                 flex: 1;
                 position: relative;
                 background: #000;
                 overflow: hidden;
             }
+
             .stream-card:hover .video-container {
                 box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.02);
             }
+
             .video-container iframe,
             #main-video-frame iframe {
                 position: absolute;
@@ -770,10 +853,12 @@
                 height: 100%;
                 border: none;
             }
+
             #chat-wrapper .video-container {
                 background: #0f0f0f;
                 overflow: hidden;
             }
+
             #chat-wrapper iframe {
                 position: absolute;
                 top: 0;
@@ -785,9 +870,8 @@
                 border: none;
                 background: #0f0f0f;
             }
-            /* ==========================================
-   PLACEHOLDER STYLES
-   ========================================== */
+
+            /* ========================================== PLACEHOLDER STYLES ========================================== */
             .placeholder {
                 position: absolute;
                 top: 0;
@@ -802,17 +886,21 @@
                 gap: 8px;
                 cursor: pointer;
             }
+
             .placeholder:hover {
                 background: rgba(255, 255, 255, 0.02);
             }
+
             .placeholder:hover h1 {
                 opacity: 0.6;
                 text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
             }
+
             .placeholder:hover p {
                 opacity: 0.8;
                 color: var(--text-secondary);
             }
+
             .placeholder h1 {
                 font-size: 48px;
                 font-weight: 700;
@@ -821,19 +909,20 @@
                 text-shadow: 0 0 0 transparent;
                 pointer-events: none;
             }
+
             .placeholder p {
                 font-size: 13px;
                 font-weight: 500;
                 opacity: 0.5;
                 pointer-events: none;
             }
+
             #ph-chat {
                 cursor: default;
                 pointer-events: none;
             }
-            /* ==========================================
-   LIVE STREAMS DROPDOWN STYLES (GENERIC/TILES)
-   ========================================== */
+
+            /* ========================================== LIVE STREAMS DROPDOWN STYLES (GENERIC/TILES) ========================================== */
             .stream-dropdown-wrapper {
                 position: absolute;
                 top: 0;
@@ -851,9 +940,11 @@
                 gap: 16px;
                 padding: 20px;
             }
+
             .stream-dropdown-wrapper.hidden {
                 display: none;
             }
+
             .dropdown-title {
                 font-size: 14px;
                 font-weight: 600;
@@ -861,12 +952,14 @@
                 text-transform: uppercase;
                 letter-spacing: 1px;
             }
+
             .dropdown-channel-name {
                 font-size: 18px;
                 font-weight: 700;
                 color: var(--text-primary);
                 margin-bottom: 8px;
             }
+
             .stream-dropdown {
                 width: 90%;
                 max-width: 400px;
@@ -879,6 +972,7 @@
                 overflow: hidden;
                 position: relative;
             }
+
             .dropdown-header {
                 display: flex;
                 align-items: center;
@@ -889,9 +983,11 @@
                 border-bottom: 1px solid var(--glass-border);
                 flex-shrink: 0;
             }
+
             .dropdown-header:hover {
                 background: rgba(255, 255, 255, 0.1);
             }
+
             .dropdown-header-text {
                 font-size: 14px;
                 font-weight: 500;
@@ -901,6 +997,7 @@
                 text-overflow: ellipsis;
                 flex: 1;
             }
+
             .dropdown-arrow {
                 width: 20px;
                 height: 20px;
@@ -909,18 +1006,22 @@
                 flex-shrink: 0;
                 margin-left: 10px;
             }
+
             .stream-dropdown.open .dropdown-arrow {
                 transform: rotate(180deg);
             }
+
             .dropdown-list {
                 max-height: 0;
                 overflow-y: auto;
                 transition: max-height 0.3s ease;
             }
+
             .stream-dropdown.open .dropdown-list {
                 max-height: 100%;
                 padding-bottom: 1px;
             }
+
             .dropdown-item {
                 display: flex;
                 align-items: center;
@@ -930,12 +1031,15 @@
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
                 transition: background 0.15s ease;
             }
+
             .dropdown-item:last-child {
                 border-bottom: none;
             }
+
             .dropdown-item:hover {
                 background: rgba(255, 255, 255, 0.1);
             }
+
             .dropdown-item-live {
                 display: flex;
                 align-items: center;
@@ -950,6 +1054,7 @@
                 letter-spacing: 0.5px;
                 flex-shrink: 0;
             }
+
             .dropdown-item-live::before {
                 content: "";
                 width: 6px;
@@ -958,15 +1063,18 @@
                 border-radius: 50%;
                 animation: livePulse 1.5s ease-in-out infinite;
             }
+
             @keyframes livePulse {
                 0%,
                 100% {
                     opacity: 1;
                 }
+
                 50% {
                     opacity: 0.4;
                 }
             }
+
             .dropdown-item-upcoming {
                 display: flex;
                 align-items: center;
@@ -981,6 +1089,7 @@
                 letter-spacing: 0.5px;
                 flex-shrink: 0;
             }
+
             .dropdown-item-upcoming::before {
                 content: "";
                 width: 6px;
@@ -989,6 +1098,7 @@
                 border-radius: 50%;
                 opacity: 0.6;
             }
+
             .dropdown-item-time {
                 font-size: 11px;
                 font-weight: 600;
@@ -998,6 +1108,7 @@
                 background: rgba(255, 159, 10, 0.15);
                 border-radius: 4px;
             }
+
             .dropdown-section-header {
                 padding: 10px 16px 6px;
                 font-size: 10px;
@@ -1008,12 +1119,15 @@
                 background: rgba(0, 0, 0, 0.3);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             }
+
             .dropdown-item.upcoming-item {
                 background: rgba(255, 159, 10, 0.05);
             }
+
             .dropdown-item.upcoming-item:hover {
                 background: rgba(255, 159, 10, 0.15);
             }
+
             .dropdown-item-title {
                 font-size: 13px;
                 font-weight: 500;
@@ -1023,12 +1137,14 @@
                 text-overflow: ellipsis;
                 flex: 1;
             }
+
             .dropdown-item-viewers {
                 font-size: 12px;
                 font-weight: 600;
                 color: var(--text-secondary);
                 flex-shrink: 0;
             }
+
             .dropdown-loading {
                 display: flex;
                 align-items: center;
@@ -1038,6 +1154,7 @@
                 color: var(--text-secondary);
                 font-size: 13px;
             }
+
             .dropdown-loading-spinner {
                 width: 18px;
                 height: 18px;
@@ -1046,31 +1163,37 @@
                 border-radius: 50%;
                 animation: spin 0.8s linear infinite;
             }
+
             @keyframes spin {
                 to {
                     transform: rotate(360deg);
                 }
             }
+
             .dropdown-error {
                 padding: 20px;
                 text-align: center;
                 color: var(--text-secondary);
                 font-size: 13px;
             }
+
             .dropdown-error-retry {
                 color: var(--accent-blue);
                 cursor: pointer;
                 margin-top: 8px;
                 font-weight: 500;
             }
+
             .dropdown-error-retry:hover {
                 text-decoration: underline;
             }
+
             .dropdown-actions {
                 display: flex;
                 gap: 10px;
                 margin-top: 8px;
             }
+
             .dropdown-btn {
                 padding: 10px 20px;
                 font-size: 13px;
@@ -1080,24 +1203,27 @@
                 cursor: pointer;
                 transition: all 0.15s ease;
             }
+
             .dropdown-btn-skip {
                 background: rgba(255, 255, 255, 0.1);
                 color: var(--text-secondary);
             }
+
             .dropdown-btn-skip:hover {
                 background: rgba(255, 255, 255, 0.2);
                 color: var(--text-primary);
             }
+
             .dropdown-btn-refresh {
                 background: rgba(10, 132, 255, 0.2);
                 color: var(--accent-blue);
             }
+
             .dropdown-btn-refresh:hover {
                 background: rgba(10, 132, 255, 0.3);
             }
-            /* ==========================================
-   MODAL STYLES
-   ========================================== */
+
+            /* ========================================== MODAL STYLES ========================================== */
             #modal-overlay {
                 position: fixed;
                 top: 0;
@@ -1113,9 +1239,11 @@
                 align-items: center;
                 opacity: 0;
             }
+
             #modal-overlay.active {
                 opacity: 1;
             }
+
             .modal-box {
                 background: var(--glass-bg);
                 backdrop-filter: blur(40px);
@@ -1132,9 +1260,11 @@
                 opacity: 0;
                 overflow-y: auto;
             }
+
             #modal-overlay.active .modal-box {
                 opacity: 1;
             }
+
             .modal-title {
                 color: var(--text-primary);
                 font-size: 17px;
@@ -1142,12 +1272,14 @@
                 text-align: center;
                 padding-bottom: 8px;
             }
+
             .modal-slot-info {
                 text-align: center;
                 color: var(--text-secondary);
                 font-size: 13px;
                 margin-top: -12px;
             }
+
             .modal-divider {
                 display: flex;
                 align-items: center;
@@ -1158,6 +1290,7 @@
                 text-transform: uppercase;
                 letter-spacing: 1px;
             }
+
             .modal-divider::before,
             .modal-divider::after {
                 content: "";
@@ -1165,6 +1298,7 @@
                 height: 1px;
                 background: var(--glass-border);
             }
+
             .modal-section-title {
                 font-size: 13px;
                 font-weight: 600;
@@ -1173,11 +1307,13 @@
                 letter-spacing: 0.5px;
                 margin-bottom: 8px;
             }
+
             .modal-dropdown-wrapper {
                 display: flex;
                 flex-direction: column;
                 gap: 8px;
             }
+
             .modal-dropdown {
                 width: 100%;
                 background: rgba(30, 30, 30, 0.95);
@@ -1187,20 +1323,24 @@
                 display: flex;
                 flex-direction: column;
             }
+
             .modal-dropdown .dropdown-header {
                 padding: 14px 16px;
                 flex-shrink: 0;
             }
+
             .modal-dropdown .dropdown-list {
                 max-height: 0;
                 overflow-y: hidden;
                 transition: max-height 0.25s ease;
             }
+
             .modal-dropdown.open .dropdown-list {
                 max-height: 250px;
                 overflow-y: auto;
                 padding-bottom: 30px;
             }
+
             .modal-input {
                 background: rgba(0, 0, 0, 0.3);
                 border: 1px solid var(--glass-border);
@@ -1212,21 +1352,25 @@
                 width: 100%;
                 outline: none;
             }
+
             .modal-input::placeholder {
                 color: var(--text-tertiary);
             }
+
             .modal-input:focus {
                 border-color: var(--accent-blue);
                 box-shadow:
                     0 0 0 3px rgba(10, 132, 255, 0.25),
                     0 0 20px rgba(10, 132, 255, 0.15);
             }
+
             .modal-actions {
                 display: flex;
                 justify-content: center;
                 gap: 10px;
                 padding-top: 8px;
             }
+
             .btn-modal {
                 padding: 12px 24px;
                 font-weight: 600;
@@ -1236,25 +1380,31 @@
                 border: none;
                 border-radius: var(--radius-md);
             }
+
             .btn-modal:active {
                 opacity: 0.8;
             }
+
             .btn-cancel {
                 background: rgba(255, 255, 255, 0.1);
                 color: var(--text-primary);
             }
+
             .btn-cancel:hover {
                 background: rgba(255, 255, 255, 0.18);
                 box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
             }
+
             .btn-confirm {
                 background: var(--accent-blue);
                 color: #fff;
             }
+
             .btn-confirm:hover {
                 background: #0077ed;
                 box-shadow: 0 0 25px rgba(10, 132, 255, 0.5);
             }
+
             .modal-refresh-btn {
                 display: flex;
                 align-items: center;
@@ -1270,58 +1420,326 @@
                 cursor: pointer;
                 align-self: flex-start;
             }
+
             .modal-refresh-btn:hover {
                 background: rgba(10, 132, 255, 0.25);
             }
+
             .modal-refresh-btn svg {
                 width: 14px;
                 height: 14px;
             }
-            /* ==========================================
-   SCROLLBAR STYLES
-   ========================================== */
+
+            /* ========================================== SCROLLBAR STYLES ========================================== */
             ::-webkit-scrollbar {
                 width: 8px;
                 height: 8px;
             }
+
             ::-webkit-scrollbar-track {
                 background: transparent;
             }
+
             ::-webkit-scrollbar-thumb {
                 background: rgba(255, 255, 255, 0.15);
                 border-radius: 4px;
             }
+
             ::-webkit-scrollbar-thumb:hover {
                 background: rgba(255, 255, 255, 0.25);
             }
+
             ::selection {
                 background: rgba(10, 132, 255, 0.4);
             }
-            /* ==========================================
-   RESPONSIVE STYLES
-   ========================================== */
+
+            /* ========================================== RESPONSIVE STYLES ========================================== */
             @media (max-width: 900px) {
+                body {
+                    padding: 0;
+                }
+
+                /* Hide the grid-right on mobile */
+                #grid-right {
+                    display: none !important;
+                }
+
+                /* Make news ticker responsive */
+                #news-ticker {
+                    height: auto;
+                    min-height: 50px;
+                }
+
+                .ticker-icon {
+                    padding: 0 12px;
+                }
+
+                .ticker-icon .ticker-logo {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .ticker-icon .ticker-wave {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                a.ticker-item {
+                    font-size: 34px;
+                    padding-right: 20px;
+                }
+
+                .ticker-loading {
+                    font-size: 14px;
+                }
+
+                /* Main container adjustments */
                 #main-container {
                     flex-direction: column;
                     overflow-y: auto;
                 }
+
+                /* Sidebar left takes full width */
                 #sidebar-left {
                     width: 100%;
-                    height: auto;
+                    border-left: none;
+                    border-top: 2px solid #00fc93;
                 }
+
+                /* Main video frame responsive */
+                #main-video-frame {
+                    height: 200px;
+                    min-height: 200px;
+                }
+
+                #main-video-frame .stream-dropdown-wrapper {
+                    min-height: 200px;
+                }
+
+                /* Header row responsive */
+                .header-row {
+                    height: 48px;
+                }
+
+                .stream-title {
+                    font-size: 16px;
+                    letter-spacing: 0.3px;
+                }
+
+                .card-header {
+                    padding: 0 12px;
+                }
+
+                /* Viewer badge responsive */
+                .viewer-badge {
+                    min-width: 100px;
+                    padding: 0 12px;
+                }
+
+                .badge-content {
+                    font-size: 18px;
+                    min-width: 70px;
+                    gap: 6px;
+                }
+
+                .badge-content svg {
+                    width: 24px;
+                    height: 24px;
+                }
+
+                /* Close button responsive */
+                .close-btn {
+                    width: 40px;
+                    font-size: 16px;
+                }
+
+                /* Chat wrapper responsive */
                 #chat-wrapper {
-                    height: 400px;
+                    height: 300px;
+                    min-height: 300px;
                 }
-                #grid-right {
-                    height: 800px;
+
+                /* Placeholder responsive */
+                .placeholder h1 {
+                    font-size: 28px;
                 }
+
+                .placeholder p {
+                    font-size: 11px;
+                }
+
+                /* Dropdown responsive */
+                .stream-dropdown-wrapper {
+                    padding: 12px;
+                }
+
+                .stream-dropdown {
+                    width: 95%;
+                    max-width: 100%;
+                }
+
+                .dropdown-title {
+                    font-size: 12px;
+                }
+
+                .dropdown-channel-name {
+                    font-size: 16px;
+                }
+
+                .dropdown-header {
+                    padding: 10px 12px;
+                }
+
+                .dropdown-header-text {
+                    font-size: 13px;
+                }
+
+                .dropdown-item {
+                    padding: 10px 12px;
+                    gap: 8px;
+                }
+
+                .dropdown-item-title {
+                    font-size: 12px;
+                }
+
+                .dropdown-item-viewers {
+                    font-size: 11px;
+                }
+
+                .dropdown-item-live,
+                .dropdown-item-upcoming {
+                    font-size: 9px;
+                    padding: 2px 6px;
+                }
+
+                .dropdown-item-time {
+                    font-size: 10px;
+                }
+
+                /* Modal responsive */
                 .modal-box {
                     width: 95%;
-                    max-width: 420px;
+                    max-width: 95%;
+                    padding: 20px;
+                    margin: 10px;
+                }
+
+                .modal-title {
+                    font-size: 16px;
+                }
+
+                .modal-slot-info {
+                    font-size: 12px;
+                }
+
+                .modal-section-title {
+                    font-size: 12px;
+                }
+
+                .modal-input {
+                    padding: 12px 14px;
+                    font-size: 14px;
+                }
+
+                .btn-modal {
+                    padding: 10px 20px;
+                    font-size: 14px;
+                }
+
+                .modal-dropdown.open .dropdown-list {
+                    max-height: 180px;
+                }
+            }
+
+            /* Extra small devices (phones, less than 600px) */
+            @media (max-width: 600px) {
+                a.ticker-item {
+                    font-size: 28px;
+                }
+
+                .ticker-icon .ticker-logo {
+                    width: 30px;
+                    height: 30px;
+                }
+
+                .ticker-icon .ticker-wave {
+                    width: 30px;
+                    height: 30px;
+                }
+
+                .stream-title {
+                    font-size: 14px;
+                }
+
+                .badge-content {
+                    font-size: 16px;
+                    min-width: 60px;
+                }
+
+                .badge-content svg {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                #main-video-frame {
+                    height: 180px;
+                    min-height: 255px;
+                }
+
+                #main-video-frame .stream-dropdown-wrapper {
+                    min-height: 255px;
+                }
+
+                #chat-wrapper {
+                    height: 250px;
+                    min-height: 250px;
+                }
+
+                .placeholder h1 {
+                    font-size: 24px;
+                }
+
+                .placeholder p {
+                    font-size: 10px;
+                }
+            }
+
+            /* Very small devices (less than 400px) */
+            @media (max-width: 400px) {
+                a.ticker-item {
+                    font-size: 14px;
+                }
+
+                .ticker-icon {
+                    padding: 0 8px;
+                }
+
+                .stream-title {
+                    font-size: 12px;
+                }
+
+                .badge-content {
+                    font-size: 14px;
+                    min-width: 50px;
+                }
+
+                .header-row {
+                    height: 44px;
+                }
+
+                .card-header {
+                    padding: 0 8px;
+                }
+
+                .viewer-badge {
+                    padding: 0 8px;
+                    min-width: 80px;
                 }
             }
         </style>
     </head>
+
     <body>
         <!-- Modal Overlay -->
         <div id="modal-overlay" aria-hidden="true">
@@ -1332,9 +1750,9 @@
                     <div class="modal-section-title">Select Live Stream</div>
                     <div class="modal-dropdown" id="modal-stream-dropdown">
                         <div class="dropdown-header" onclick="window.app?.toggleModalDropdown()">
-                            <span class="dropdown-header-text" id="modal-dropdown-selected"
-                                >Choose a live stream...</span
-                            >
+                            <span class="dropdown-header-text" id="modal-dropdown-selected">
+                                Choose a live stream...
+                            </span>
                             <svg class="dropdown-arrow" viewBox="0 0 24 24">
                                 <path d="M7 10l5 5 5-5z" fill="currentColor" />
                             </svg>
@@ -1414,9 +1832,9 @@
                             <div class="dropdown-channel-name" id="dropdown-channel-1">Loading...</div>
                             <div class="stream-dropdown" id="stream-dropdown-1">
                                 <div class="dropdown-header" onclick="window.app?.toggleDropdown('1')">
-                                    <span class="dropdown-header-text" id="dropdown-selected-1"
-                                        >Choose a live stream...</span
-                                    >
+                                    <span class="dropdown-header-text" id="dropdown-selected-1">
+                                        Choose a live stream...
+                                    </span>
                                     <svg class="dropdown-arrow" viewBox="0 0 24 24">
                                         <path d="M7 10l5 5 5-5z" fill="currentColor" />
                                     </svg>
@@ -1486,9 +1904,9 @@
                             <div class="dropdown-channel-name" id="dropdown-channel-2">Loading...</div>
                             <div class="stream-dropdown" id="stream-dropdown-2">
                                 <div class="dropdown-header" onclick="window.app?.toggleDropdown('2')">
-                                    <span class="dropdown-header-text" id="dropdown-selected-2"
-                                        >Choose a live stream...</span
-                                    >
+                                    <span class="dropdown-header-text" id="dropdown-selected-2">
+                                        Choose a live stream...
+                                    </span>
                                     <svg class="dropdown-arrow" viewBox="0 0 24 24">
                                         <path d="M7 10l5 5 5-5z" fill="currentColor" />
                                     </svg>
@@ -1558,9 +1976,9 @@
                             <div class="dropdown-channel-name" id="dropdown-channel-3">Loading...</div>
                             <div class="stream-dropdown" id="stream-dropdown-3">
                                 <div class="dropdown-header" onclick="window.app?.toggleDropdown('3')">
-                                    <span class="dropdown-header-text" id="dropdown-selected-3"
-                                        >Choose a live stream...</span
-                                    >
+                                    <span class="dropdown-header-text" id="dropdown-selected-3">
+                                        Choose a live stream...
+                                    </span>
                                     <svg class="dropdown-arrow" viewBox="0 0 24 24">
                                         <path d="M7 10l5 5 5-5z" fill="currentColor" />
                                     </svg>
@@ -1630,9 +2048,9 @@
                             <div class="dropdown-channel-name" id="dropdown-channel-4">Loading...</div>
                             <div class="stream-dropdown" id="stream-dropdown-4">
                                 <div class="dropdown-header" onclick="window.app?.toggleDropdown('4')">
-                                    <span class="dropdown-header-text" id="dropdown-selected-4"
-                                        >Choose a live stream...</span
-                                    >
+                                    <span class="dropdown-header-text" id="dropdown-selected-4">
+                                        Choose a live stream...
+                                    </span>
                                     <svg class="dropdown-arrow" viewBox="0 0 24 24">
                                         <path d="M7 10l5 5 5-5z" fill="currentColor" />
                                     </svg>
@@ -1704,9 +2122,9 @@
                             <div class="dropdown-channel-name" id="dropdown-channel-main">Loading...</div>
                             <div class="stream-dropdown" id="stream-dropdown-main">
                                 <div class="dropdown-header" onclick="window.app?.toggleDropdown('main')">
-                                    <span class="dropdown-header-text" id="dropdown-selected-main"
-                                        >Choose a live stream...</span
-                                    >
+                                    <span class="dropdown-header-text" id="dropdown-selected-main">
+                                        Choose a live stream...
+                                    </span>
                                     <svg class="dropdown-arrow" viewBox="0 0 24 24">
                                         <path d="M7 10l5 5 5-5z" fill="currentColor" />
                                     </svg>
@@ -1800,13 +2218,22 @@
         </div>
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
-            // Ticker code
+            // =============================================
+            const WORKING_PROXIES = [
+                (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+                (url) => `https://cors.eu.org/${url}`,
+            ];
+
+            // =============================================
+            // TICKER CODE
+            // =============================================
             let tickerTitles = [],
                 tickerLinks = [],
                 currentTickerIndex = 0,
                 tickerTimeout = null,
                 lastFetchTime = 0,
                 isFetchingTicker = false;
+
             const DISPLAY_DURATION = 6000,
                 HOLD_BEFORE_SCROLL = 1500,
                 HOLD_AFTER_SCROLL = 2500,
@@ -1814,31 +2241,19 @@
                 BASE_URL = "https://www.athletiko.gr/latest-news",
                 MIN_WORD_COUNT = 3,
                 TICKER_FETCH_INTERVAL = 30000,
-                FETCH_TIMEOUT = 5000,
+                TICKER_FETCH_TIMEOUT = 15000,
                 FLASH_DURATION = 800;
-            const CORS_PROXIES = [
-                (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-                (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-            ];
 
-            // YouTube API Ready State Management
             let ytApiReadyGlobal = false;
-            let ytApiReadyCallbacks = [];
 
             function onYouTubeIframeAPIReady() {
                 ytApiReadyGlobal = true;
-                // Execute any waiting callbacks
-                ytApiReadyCallbacks.forEach((cb) => cb());
-                ytApiReadyCallbacks = [];
-                // Also notify app if it exists
                 if (window.app) {
                     window.app.ytApiReady = true;
                     window.app.onYTApiReady();
                 }
             }
 
-            // Check if YT API is already loaded (happens on refresh in Chrome)
             function checkYTApi() {
                 if (window.YT && window.YT.Player && typeof window.YT.Player === "function") {
                     ytApiReadyGlobal = true;
@@ -1856,57 +2271,54 @@
                     : 0;
             }
 
-            async function fetchWithTimeout(url, timeout) {
-                const c = new AbortController(),
-                    id = setTimeout(() => c.abort(), timeout);
-                try {
-                    const r = await fetch(url, {
-                        signal: c.signal,
-                        cache: "no-store",
-                        headers: { "Cache-Control": "no-cache", Pragma: "no-cache" },
-                    });
-                    clearTimeout(id);
-                    return r;
-                } catch (e) {
-                    clearTimeout(id);
-                    throw e;
-                }
-            }
-
             function triggerTickerFlash() {
                 const ticker = document.getElementById("news-ticker");
                 if (!ticker) return;
                 ticker.classList.remove("flash");
                 void ticker.offsetWidth;
                 ticker.classList.add("flash");
-                setTimeout(() => {
-                    ticker.classList.remove("flash");
-                }, FLASH_DURATION);
+                setTimeout(() => ticker.classList.remove("flash"), FLASH_DURATION);
             }
 
             async function fetchNewsTicker() {
                 if (isFetchingTicker) return;
                 isFetchingTicker = true;
-                const t = Date.now(),
-                    u = `${BASE_URL}?_t=${t}&_r=${Math.random()}`;
-                const ps = CORS_PROXIES.map((m) => {
-                    const p = m(u);
-                    return fetchWithTimeout(p, FETCH_TIMEOUT)
-                        .then((r) => {
-                            if (!r.ok) throw new Error("Bad");
-                            return r.text();
-                        })
-                        .then((h) => {
-                            if (!h || h.length < 500) throw new Error("Short");
-                            return h;
-                        });
-                });
+
                 try {
-                    const html = await Promise.any(ps),
-                        parser = new DOMParser(),
-                        doc = parser.parseFromString(html, "text/html"),
-                        titles = [],
-                        links = [];
+                    const t = Date.now();
+                    const url = `${BASE_URL}?_t=${t}`;
+
+                    let html = null;
+                    for (const proxyFn of WORKING_PROXIES) {
+                        try {
+                            const controller = new AbortController();
+                            const timeout = setTimeout(() => controller.abort(), TICKER_FETCH_TIMEOUT);
+
+                            const response = await fetch(proxyFn(url), {
+                                signal: controller.signal,
+                                cache: "no-store",
+                            });
+
+                            clearTimeout(timeout);
+
+                            if (!response.ok) continue;
+
+                            html = await response.text();
+                            if (html && html.length > 500) break;
+                        } catch (e) {
+                            continue;
+                        }
+                    }
+
+                    if (!html || html.length < 500) {
+                        throw new Error("All proxies failed");
+                    }
+
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, "text/html");
+                    const titles = [];
+                    const links = [];
+
                     doc.querySelectorAll("a[href]").forEach((a) => {
                         const h2 = a.querySelector("h2");
                         if (h2) {
@@ -1921,17 +2333,16 @@
                                 const rh = a.getAttribute("href");
                                 let hr = "https://www.athletiko.gr";
                                 if (rh) {
-                                    if (rh.startsWith("http://") || rh.startsWith("https://")) hr = rh;
-                                    else if (rh.startsWith("//")) hr = "https:" + rh;
+                                    if (rh.startsWith("http")) hr = rh;
                                     else if (rh.startsWith("/")) hr = "https://www.athletiko.gr" + rh;
-                                    else hr = "https://www.athletiko.gr/" + rh;
                                 }
                                 titles.push(tx);
                                 links.push(hr);
                             }
                         }
                     });
-                    if (titles.length === 0)
+
+                    if (titles.length === 0) {
                         doc.querySelectorAll("h2").forEach((h2) => {
                             const tx = h2.textContent?.trim();
                             if (
@@ -1941,34 +2352,39 @@
                                 countWords(tx) >= MIN_WORD_COUNT &&
                                 !titles.includes(tx)
                             ) {
-                                let a = h2.closest("a") || h2.querySelector("a"),
-                                    hr = "https://www.athletiko.gr";
+                                const a = h2.closest("a") || h2.querySelector("a");
+                                let hr = "https://www.athletiko.gr";
                                 if (a) {
                                     const rh = a.getAttribute("href");
                                     if (rh) {
-                                        if (rh.startsWith("http://") || rh.startsWith("https://")) hr = rh;
-                                        else if (rh.startsWith("//")) hr = "https:" + rh;
+                                        if (rh.startsWith("http")) hr = rh;
                                         else if (rh.startsWith("/")) hr = "https://www.athletiko.gr" + rh;
-                                        else hr = "https://www.athletiko.gr/" + rh;
                                     }
                                 }
                                 titles.push(tx);
                                 links.push(hr);
                             }
                         });
-                    if (titles.length > 0) {
-                        const hasNew = titles.slice(0, 3).some((t) => !tickerTitles.includes(t));
-                        const isFirstLoad = tickerTitles.length === 0;
+                    }
 
-                        if (hasNew || isFirstLoad) {
+                    if (titles.length > 0) {
+                        lastFetchTime = t;
+
+                        // Check if content actually changed before resetting the ticker
+                        const hasChanged =
+                            titles.length !== tickerTitles.length ||
+                            titles.some((title, i) => title !== tickerTitles[i]);
+
+                        if (hasChanged) {
                             tickerTitles = titles;
                             tickerLinks = links;
-                            lastFetchTime = t;
                             triggerTickerFlash();
                             initTicker();
                         }
+                        // If content hasn't changed, do nothing — let the current cycle continue
                     }
                 } catch (e) {
+                    console.warn("Ticker fetch failed:", e.message);
                     if (tickerTitles.length === 0) {
                         tickerTitles = ["Sports News", "Live Coverage", "Breaking Stories"];
                         tickerLinks = [
@@ -1976,7 +2392,6 @@
                             "https://www.athletiko.gr",
                             "https://www.athletiko.gr",
                         ];
-                        triggerTickerFlash();
                         initTicker();
                     }
                 }
@@ -2004,6 +2419,7 @@
             function showTickerItem(i) {
                 if (tickerTimeout) clearTimeout(tickerTimeout);
                 const c = document.getElementById("ticker-content");
+                if (!c) return;
                 c.classList.remove("has-overflow");
                 document.querySelectorAll(".ticker-item").forEach((it) => {
                     it.classList.remove("active", "exiting", "scrolling");
@@ -2013,41 +2429,40 @@
                 currentTickerIndex = i;
                 const it = document.getElementById(`ticker-item-${i}`);
                 if (it && c) {
-                    const cw = c.clientWidth - 48,
-                        iw = it.scrollWidth,
-                        ov = iw - cw;
+                    const cw = c.clientWidth - 48;
+                    const iw = it.scrollWidth;
+                    const ov = iw - cw;
                     if (ov > 0) c.classList.add("has-overflow");
                     it.style.transform = "translateX(0)";
                     it.classList.add("active");
                     setTimeout(() => {
-                        if (ov > 0) handleLongText(it, ov, c);
-                        else tickerTimeout = setTimeout(() => transitionToNext(), DISPLAY_DURATION);
+                        if (ov > 0) handleLongText(it, ov);
+                        else tickerTimeout = setTimeout(transitionToNext, DISPLAY_DURATION);
                     }, 50);
                 }
             }
 
-            function handleLongText(it, ov, c) {
+            function handleLongText(it, ov) {
                 tickerTimeout = setTimeout(() => {
-                    const sd = ov + 30,
-                        dur = Math.max(MIN_SCROLL_DURATION, (sd / 80) * 1000);
+                    const sd = ov + 30;
+                    const dur = Math.max(MIN_SCROLL_DURATION, (sd / 80) * 1000);
                     it.classList.add("scrolling");
                     it.style.transition = `transform ${dur}ms ease-in-out`;
                     it.style.transform = `translateX(-${sd}px)`;
                     tickerTimeout = setTimeout(() => {
-                        tickerTimeout = setTimeout(() => transitionToNext(), HOLD_AFTER_SCROLL);
+                        tickerTimeout = setTimeout(transitionToNext, HOLD_AFTER_SCROLL);
                     }, dur);
                 }, HOLD_BEFORE_SCROLL);
             }
 
             function transitionToNext() {
-                const c = document.getElementById("ticker-content"),
-                    ci = document.getElementById(`ticker-item-${currentTickerIndex}`);
+                const c = document.getElementById("ticker-content");
+                const ci = document.getElementById(`ticker-item-${currentTickerIndex}`);
                 if (ci) {
                     ci.classList.remove("active", "scrolling");
                     ci.classList.add("exiting");
-                    ci.style.transition = "opacity 0.25s ease, transform 0.25s ease";
                 }
-                c.classList.remove("has-overflow");
+                if (c) c.classList.remove("has-overflow");
                 const ni = (currentTickerIndex + 1) % tickerTitles.length;
                 setTimeout(() => showTickerItem(ni), 250);
             }
@@ -2058,6 +2473,9 @@
                 if (!document.hidden && Date.now() - lastFetchTime > 15000) fetchNewsTicker();
             });
 
+            // =============================================
+            // STREAM APP CLASS
+            // =============================================
             class StreamApp {
                 constructor() {
                     this.modal = document.getElementById("modal-overlay");
@@ -2071,60 +2489,402 @@
                     this.muteCheckInterval = null;
                     this.TARGET_QUALITY = "hd720";
                     this.MIN_INTERVAL_MS = 4000;
-                    this.FETCH_TIMEOUT = 6000;
-                    this.CORS_PROXIES = [
-                        (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                        (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-                        (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-                    ];
-                    this.userIconSVG =
-                        '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
-                    this.previousViewerCounts = {};
-                    this.MILESTONE_THRESHOLD = 1000;
-                    this.channelConfigs = {
-                        1: { channelUrl: "https://www.youtube.com/@sport24greecetv/streams", channelName: "SPORT24" },
-                        2: { channelUrl: "https://www.youtube.com/@gazzetta_gr/streams", channelName: "Gazzetta.gr" },
-                        3: { channelUrl: "https://www.youtube.com/@Betarades_gr/streams", channelName: "BETARADES" },
-                        4: { channelUrl: "https://www.youtube.com/@Foxbet_Gr/streams", channelName: "Foxbet.gr" },
-                        main: { channelUrl: "https://www.youtube.com/@athletikogr/streams", channelName: "Athletiko" },
-                    };
-                    this.liveStreamsCache = {};
-                    this.modalLiveStreams = [];
-                    this.initLiveStreamDropdowns();
+                    this.FETCH_TIMEOUT = 12000;
+                    this.STREAM_END_CONFIRM_COUNT = 2;
 
-                    // Initialize YouTube API check
+                    this.CORS_PROXIES = WORKING_PROXIES;
+
+                    this.userIconSVG =
+                        '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+                    this.previousViewerCounts = {};
+                    this.lastKnownViewerCounts = {};
+                    this.MILESTONE_THRESHOLD = 1000;
+                    this.autoLoadDone = {};
+                    this.closedSlots = {};
+
+                    this.channelConfigs = {
+                        1: {
+                            channelHandle: "@sport24greecetv",
+                            channelName: "SPORT24",
+                            urls: [
+                                "https://www.youtube.com/@sport24greecetv/streams",
+                                "https://www.youtube.com/@sport24greecetv/live",
+                            ],
+                        },
+                        2: {
+                            channelHandle: "@gazzetta_gr",
+                            channelName: "Gazzetta.gr",
+                            urls: [
+                                "https://www.youtube.com/@gazzetta_gr/streams",
+                                "https://www.youtube.com/@gazzetta_gr/live",
+                            ],
+                        },
+                        3: {
+                            channelHandle: "@Betarades_gr",
+                            channelName: "BETARADES",
+                            urls: [
+                                "https://www.youtube.com/@Betarades_gr/streams",
+                                "https://www.youtube.com/@Betarades_gr/live",
+                            ],
+                        },
+                        4: {
+                            channelHandle: "@Foxbet_Gr",
+                            channelName: "Foxbet.gr",
+                            urls: [
+                                "https://www.youtube.com/@Foxbet_Gr/streams",
+                                "https://www.youtube.com/@Foxbet_Gr/live",
+                            ],
+                        },
+                        main: {
+                            channelHandle: "@athletikogr",
+                            channelName: "Athletiko",
+                            urls: [
+                                "https://www.youtube.com/@athletikogr/streams",
+                                "https://www.youtube.com/@athletikogr/live",
+                            ],
+                        },
+                    };
+
+                    this.liveStreamsCache = {};
+                    this.cacheTimestamps = {};
+                    this.modalLiveStreams = [];
+
+                    console.log("🚀 StreamApp initialized");
+
+                    this._loadSavedViewerCounts();
+                    this.initLiveStreamDropdowns();
                     this.initYTApiCheck();
+                    this._startBadgeProtection();
+                }
+
+                _loadSavedViewerCounts() {
+                    try {
+                        const saved = localStorage.getItem("streamViewerCounts");
+                        if (saved) {
+                            this.lastKnownViewerCounts = JSON.parse(saved) || {};
+                        }
+                    } catch (e) {
+                        this.lastKnownViewerCounts = {};
+                    }
+                }
+
+                _saveViewerCounts() {
+                    try {
+                        localStorage.setItem("streamViewerCounts", JSON.stringify(this.lastKnownViewerCounts));
+                    } catch (e) {}
+                }
+
+                _startBadgeProtection() {
+                    setInterval(() => {
+                        Object.keys(this.slotStates).forEach((slot) => {
+                            const st = this.slotStates[slot];
+                            if (st && st.vidId && st.realtimeActive && !this.closedSlots[slot]) {
+                                const bc = document.getElementById(`badge-content-${slot}`);
+                                if (bc) {
+                                    const spanEl = bc.querySelector("span");
+                                    const currentText = spanEl ? spanEl.textContent.trim() : "";
+                                    if (!currentText || currentText === "—") {
+                                        const lastKnown = this.lastKnownViewerCounts[slot];
+                                        if (lastKnown && /\d/.test(lastKnown)) {
+                                            bc.innerHTML = `${this.userIconSVG}<span>${this._escapeHtml(lastKnown)}</span>`;
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }, 2000);
+                }
+
+                _formatDateTime(timestamp, timeStr) {
+                    if (!timestamp) return timeStr || "";
+                    const date = new Date(timestamp);
+                    const day = date.getDate().toString().padStart(2, "0");
+                    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+                    const hours = date.getHours().toString().padStart(2, "0");
+                    const minutes = date.getMinutes().toString().padStart(2, "0");
+                    return `${day}/${month} ${timeStr || `${hours}:${minutes}`}`;
+                }
+
+                async autoLoadBestStream(slot) {
+                    if (this.autoLoadDone[slot] || this.closedSlots[slot]) return;
+                    this.autoLoadDone[slot] = true;
+                    const cache = this.liveStreamsCache[slot];
+                    if (!cache) return;
+                    const { live, upcoming } = cache;
+                    let bestStream = null;
+                    if (live && live.length > 0) {
+                        bestStream = live[0];
+                    } else if (upcoming && upcoming.length > 0) {
+                        bestStream = upcoming[0];
+                    }
+                    if (bestStream) {
+                        this.hideDropdown(slot);
+                        const url = `https://www.youtube.com/watch?v=${bestStream.videoId}`;
+                        this.loadVideo(slot, bestStream.videoId, url);
+                        this.fetchChannelName(url, slot);
+                    }
+                }
+
+                _extractStreamFromRenderer(renderer) {
+                    if (!renderer) return null;
+                    const videoId = renderer.videoId;
+                    if (!videoId || videoId.length !== 11) return null;
+
+                    let title = renderer.title?.runs?.[0]?.text || renderer.title?.simpleText || "Untitled";
+                    let isLive = false,
+                        isUpcoming = false,
+                        viewers = null,
+                        scheduledTime = null,
+                        scheduledTimestamp = null;
+
+                    const badges = renderer.badges || [];
+                    for (const b of badges) {
+                        const mr = b?.metadataBadgeRenderer;
+                        if (mr) {
+                            const label = (mr.label || "").toLowerCase();
+                            if (label.includes("live")) isLive = true;
+                        }
+                        if (b?.liveBadge) isLive = true;
+                    }
+
+                    const overlays = renderer.thumbnailOverlays || [];
+                    for (const ov of overlays) {
+                        const sr = ov?.thumbnailOverlayTimeStatusRenderer;
+                        if (sr) {
+                            const style = (sr.style || "").toUpperCase();
+                            if (style === "LIVE") isLive = true;
+                            if (style === "UPCOMING") isUpcoming = true;
+                        }
+                    }
+
+                    const vct =
+                        renderer.viewCountText?.runs?.map((r) => r.text).join("") ||
+                        renderer.viewCountText?.simpleText ||
+                        "";
+                    if (vct) {
+                        const lower = vct.toLowerCase();
+                        if (lower.includes("watching") || lower.includes("παρακολουθ")) {
+                            isLive = true;
+                            const m = vct.match(/([\d,.\s]+)/);
+                            if (m) viewers = m[1].trim();
+                        }
+                        if (lower.includes("waiting") || lower.includes("scheduled")) {
+                            isUpcoming = true;
+                            isLive = false;
+                        }
+                    }
+
+                    const ued = renderer.upcomingEventData;
+                    if (ued) {
+                        isUpcoming = true;
+                        isLive = false;
+                        if (ued.startTime) {
+                            const ts = parseInt(ued.startTime) * 1000;
+                            scheduledTimestamp = ts;
+                            const sd = new Date(ts);
+                            scheduledTime =
+                                sd.getHours().toString().padStart(2, "0") +
+                                ":" +
+                                sd.getMinutes().toString().padStart(2, "0");
+                        }
+                    }
+
+                    if (isLive) isUpcoming = false;
+                    if (!isLive && !isUpcoming) return null;
+
+                    return { videoId, title, isLive, isUpcoming, viewers, scheduledTime, scheduledTimestamp };
+                }
+
+                _parseStreamsFromHTML(html) {
+                    const found = new Map();
+
+                    const dataMatch =
+                        html.match(/var ytInitialData = ({.+?});/s) || html.match(/ytInitialData\s*=\s*({.+?});/s);
+                    if (dataMatch) {
+                        try {
+                            const data = JSON.parse(dataMatch[1]);
+                            const tabs = data?.contents?.twoColumnBrowseResultsRenderer?.tabs || [];
+                            for (const tab of tabs) {
+                                const content = tab?.tabRenderer?.content;
+                                if (!content) continue;
+
+                                const richGrid = content?.richGridRenderer;
+                                if (richGrid) {
+                                    for (const item of richGrid?.contents || []) {
+                                        const vr = item?.richItemRenderer?.content?.videoRenderer;
+                                        if (vr) {
+                                            const info = this._extractStreamFromRenderer(vr);
+                                            if (info) found.set(info.videoId, info);
+                                        }
+                                    }
+                                }
+
+                                const sectionList = content?.sectionListRenderer;
+                                if (sectionList) {
+                                    for (const section of sectionList?.contents || []) {
+                                        for (const sc of section?.itemSectionRenderer?.contents || []) {
+                                            if (sc?.gridRenderer) {
+                                                for (const gi of sc.gridRenderer?.items || []) {
+                                                    if (gi?.gridVideoRenderer) {
+                                                        const info = this._extractStreamFromRenderer(
+                                                            gi.gridVideoRenderer
+                                                        );
+                                                        if (info) found.set(info.videoId, info);
+                                                    }
+                                                }
+                                            }
+                                            if (sc?.channelFeaturedContentRenderer) {
+                                                for (const fi of sc.channelFeaturedContentRenderer?.items || []) {
+                                                    if (fi?.videoRenderer) {
+                                                        const info = this._extractStreamFromRenderer(fi.videoRenderer);
+                                                        if (info) found.set(info.videoId, info);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (e) {
+                            console.warn("Failed to parse ytInitialData");
+                        }
+                    }
+
+                    const playerMatch =
+                        html.match(/var ytInitialPlayerResponse = ({.+?});/s) ||
+                        html.match(/ytInitialPlayerResponse\s*=\s*({.+?});/s);
+                    if (playerMatch) {
+                        try {
+                            const pr = JSON.parse(playerMatch[1]);
+                            const vd = pr?.videoDetails;
+                            if (vd?.videoId) {
+                                const isLive = !!vd.isLive || !!vd.isLiveContent;
+                                const isUpcoming = !!vd.isUpcoming;
+                                if (isLive || isUpcoming) {
+                                    let viewers = null;
+                                    const lbd = pr?.microformat?.playerMicroformatRenderer?.liveBroadcastDetails;
+                                    if (lbd?.concurrentViewers) viewers = lbd.concurrentViewers;
+
+                                    found.set(vd.videoId, {
+                                        videoId: vd.videoId,
+                                        title: vd.title || "Live Stream",
+                                        isLive: isLive && !isUpcoming,
+                                        isUpcoming: isUpcoming && !isLive,
+                                        viewers,
+                                        scheduledTime: null,
+                                        scheduledTimestamp: null,
+                                    });
+                                }
+                            }
+                        } catch (e) {}
+                    }
+
+                    const live = [];
+                    const upcoming = [];
+                    for (const stream of found.values()) {
+                        if (stream.isLive) live.push(stream);
+                        else if (stream.isUpcoming) upcoming.push(stream);
+                    }
+
+                    upcoming.sort((a, b) => (a.scheduledTimestamp || 0) - (b.scheduledTimestamp || 0));
+
+                    return { live, upcoming };
+                }
+
+                async _fetchPageHTML(url) {
+                    const t = Date.now();
+                    const cacheBustedUrl = `${url}${url.includes("?") ? "&" : "?"}_t=${t}`;
+
+                    const promises = this.CORS_PROXIES.map(async (proxyFn) => {
+                        const proxyUrl = proxyFn(cacheBustedUrl);
+                        const controller = new AbortController();
+                        const timeout = setTimeout(() => controller.abort(), this.FETCH_TIMEOUT);
+
+                        try {
+                            const response = await fetch(proxyUrl, {
+                                signal: controller.signal,
+                                cache: "no-store",
+                            });
+
+                            clearTimeout(timeout);
+
+                            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                            const html = await response.text();
+
+                            if (!html || html.length < 1000) throw new Error("Response too short");
+                            if (!html.includes("ytInitialData") && !html.includes("ytInitialPlayerResponse"))
+                                throw new Error("Not a YouTube page");
+
+                            return html;
+                        } catch (e) {
+                            clearTimeout(timeout);
+                            throw e;
+                        }
+                    });
+
+                    return Promise.any(promises);
+                }
+
+                async _fetchAllStreamsForChannel(cfg) {
+                    if (!cfg?.urls?.length) return { live: [], upcoming: [] };
+
+                    const cacheKey = cfg.channelHandle;
+                    const now = Date.now();
+
+                    if (this.cacheTimestamps[cacheKey] && now - this.cacheTimestamps[cacheKey] < 60000) {
+                        return this.liveStreamsCache[cacheKey] || { live: [], upcoming: [] };
+                    }
+
+                    console.log(`🔄 Fetching ${cfg.channelName}...`);
+
+                    const allLive = new Map();
+                    const allUpcoming = new Map();
+
+                    for (const url of cfg.urls) {
+                        try {
+                            const html = await this._fetchPageHTML(url);
+                            const { live, upcoming } = this._parseStreamsFromHTML(html);
+
+                            for (const stream of live) {
+                                if (!allLive.has(stream.videoId)) allLive.set(stream.videoId, stream);
+                            }
+                            for (const stream of upcoming) {
+                                if (!allLive.has(stream.videoId) && !allUpcoming.has(stream.videoId)) {
+                                    allUpcoming.set(stream.videoId, stream);
+                                }
+                            }
+                        } catch (e) {
+                            console.warn(`Failed ${url}:`, e.message);
+                        }
+                    }
+
+                    const live = Array.from(allLive.values());
+                    const upcoming = Array.from(allUpcoming.values());
+
+                    console.log(`📺 ${cfg.channelName}: ${live.length} live, ${upcoming.length} upcoming`);
+
+                    this.liveStreamsCache[cacheKey] = { live, upcoming };
+                    this.cacheTimestamps[cacheKey] = now;
+
+                    return { live, upcoming };
                 }
 
                 initYTApiCheck() {
-                    // Check if already ready (Chrome refresh scenario)
-                    if (checkYTApi()) {
+                    if (checkYTApi() || ytApiReadyGlobal) {
                         this.ytApiReady = true;
                         this.onYTApiReady();
                         return;
                     }
-
-                    // If global flag is set but we haven't initialized
-                    if (ytApiReadyGlobal) {
-                        this.ytApiReady = true;
-                        this.onYTApiReady();
-                        return;
-                    }
-
-                    // Poll for YT API readiness (fallback for race conditions)
                     let attempts = 0;
-                    const maxAttempts = 50; // 5 seconds max
-                    const pollInterval = setInterval(() => {
+                    const poll = setInterval(() => {
                         attempts++;
                         if (checkYTApi() || ytApiReadyGlobal) {
-                            clearInterval(pollInterval);
-                            if (!this.ytApiReady) {
-                                this.ytApiReady = true;
-                                this.onYTApiReady();
-                            }
-                        } else if (attempts >= maxAttempts) {
-                            clearInterval(pollInterval);
-                            console.warn("YouTube API failed to load");
+                            clearInterval(poll);
+                            this.ytApiReady = true;
+                            this.onYTApiReady();
+                        } else if (attempts >= 50) {
+                            clearInterval(poll);
                         }
                     }, 100);
                 }
@@ -2135,25 +2895,10 @@
                     this.startMutePolling();
                 }
 
-                setQuality720p(p) {
-                    try {
-                        if (p && typeof p.setPlaybackQuality === "function") p.setPlaybackQuality(this.TARGET_QUALITY);
-                        if (p && typeof p.setPlaybackQualityRange === "function")
-                            p.setPlaybackQualityRange(this.TARGET_QUALITY, this.TARGET_QUALITY);
-                    } catch (e) {}
-                }
-
                 createYTPlayer(slot, vidId) {
-                    const ph = document.getElementById(`ph-${slot}`),
-                        ct = document.getElementById(`player-${slot}`)?.parentElement;
-                    if (!ct) return;
-
-                    // Extra safety check
-                    if (!window.YT || !window.YT.Player || typeof window.YT.Player !== "function") {
-                        console.warn("YT API not ready, queuing player creation");
-                        this.pendingLoads = this.pendingLoads.filter((p) => p.slot !== slot);
+                    const ct = document.getElementById(`player-${slot}`)?.parentElement;
+                    if (!ct || !window.YT?.Player) {
                         this.pendingLoads.push({ slot, vidId });
-                        this.initYTApiCheck();
                         return;
                     }
 
@@ -2171,88 +2916,67 @@
                     nd.id = `player-${slot}`;
                     nd.style.cssText = "display:block;position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;";
                     ct.appendChild(nd);
+
+                    const ph = document.getElementById(`ph-${slot}`);
                     if (ph) ph.style.display = "none";
 
-                    try {
-                        this.players[slot] = new YT.Player(`player-${slot}`, {
-                            videoId: vidId,
-                            host: "https://www.youtube-nocookie.com",
-                            playerVars: {
-                                autoplay: 1,
-                                mute: 1,
-                                controls: 1,
-                                disablekb: 0,
-                                enablejsapi: 1,
-                                fs: 1,
-                                iv_load_policy: 3,
-                                modestbranding: 1,
-                                playsinline: 1,
-                                rel: 0,
-                                showinfo: 0,
-                                cc_load_policy: 0,
-                                origin: window.location.origin,
-                                vq: "hd720",
+                    this.players[slot] = new YT.Player(`player-${slot}`, {
+                        videoId: vidId,
+                        host: "https://www.youtube-nocookie.com",
+                        playerVars: {
+                            autoplay: 1,
+                            mute: 1,
+                            controls: 1,
+                            enablejsapi: 1,
+                            fs: 1,
+                            iv_load_policy: 3,
+                            modestbranding: 1,
+                            playsinline: 1,
+                            rel: 0,
+                            showinfo: 0,
+                            origin: window.location.origin,
+                        },
+                        events: {
+                            onReady: (e) => {
+                                e.target.playVideo();
+                                const playerEl = document.getElementById(`player-${slot}`);
+                                if (playerEl) playerEl.style.opacity = "1";
                             },
-                            events: {
-                                onReady: (e) => this.onPlayerReady(e, slot),
-                                onStateChange: (e) => this.onPlayerStateChange(e, slot),
-                                onPlaybackQualityChange: (e) => this.onQualityChange(e, slot),
-                                onError: (e) => this.onPlayerError(e, slot),
+                            onStateChange: (e) => {
+                                if (e.data === YT.PlayerState.ENDED) this._handleStreamEnded(slot);
                             },
-                        });
-                    } catch (e) {
-                        console.error("Failed to create YT player:", e);
-                        this.pendingLoads.push({ slot, vidId });
-                        setTimeout(() => this.initYTApiCheck(), 500);
-                    }
+                            onError: (e) => {
+                                if ([100, 101, 150].includes(e.data)) this._handleStreamEnded(slot);
+                            },
+                        },
+                    });
                 }
-
-                onPlayerReady(e, slot) {
-                    e.target.playVideo();
-                    this.setQuality720p(e.target);
-                    const pd = document.getElementById(`player-${slot}`);
-                    if (pd) pd.style.opacity = "1";
-                }
-
-                onPlayerStateChange(e, slot) {
-                    if (e.data === YT.PlayerState.PLAYING) this.setQuality720p(e.target);
-                }
-
-                onQualityChange(e, slot) {
-                    if (e.data !== this.TARGET_QUALITY) this.setQuality720p(e.target);
-                }
-
-                onPlayerError(e, slot) {}
 
                 startMutePolling() {
-                    if (!this.muteCheckInterval)
-                        this.muteCheckInterval = setInterval(() => this.enforceSingleUnmuted(), 250);
-                }
-
-                enforceSingleUnmuted() {
-                    const sl = Object.keys(this.players);
-                    let um = [];
-                    for (const s of sl) {
-                        const p = this.players[s];
-                        if (p) {
-                            try {
-                                if (typeof p.isMuted === "function" && !p.isMuted()) um.push(s);
-                            } catch (e) {}
-                        }
+                    if (!this.muteCheckInterval) {
+                        this.muteCheckInterval = setInterval(() => {
+                            const um = Object.keys(this.players).filter((s) => {
+                                try {
+                                    return !this.players[s]?.isMuted?.();
+                                } catch (e) {
+                                    return false;
+                                }
+                            });
+                            if (um.length > 1) {
+                                const keep = um.find((s) => s !== this.currentUnmutedSlot) || um[0];
+                                um.forEach((s) => {
+                                    if (s !== keep) this.players[s]?.mute();
+                                });
+                                this.currentUnmutedSlot = keep;
+                            } else {
+                                this.currentUnmutedSlot = um[0] || null;
+                            }
+                        }, 250);
                     }
-                    if (um.length > 1) {
-                        const nu = um.find((s) => s !== this.currentUnmutedSlot) || um[0];
-                        for (const s of um) {
-                            if (s !== nu && this.players[s]) this.players[s].mute();
-                        }
-                        this.currentUnmutedSlot = nu;
-                    } else if (um.length === 1) this.currentUnmutedSlot = um[0];
-                    else this.currentUnmutedSlot = null;
                 }
 
                 buildChatUrl(vidId) {
-                    const d = window.location.hostname || "localhost";
-                    return `https://www.youtube.com/live_chat?v=${vidId}&embed_domain=${d}&dark_theme=1`;
+                    return `https://www.youtube.com/live_chat?v=${vidId}&embed_domain=${window.location.hostname || "localhost"}&dark_theme=1`;
                 }
 
                 openModal(slotId) {
@@ -2277,14 +3001,12 @@
                         setTimeout(() => (this.modal.style.display = "none"), 150);
                     }
                     this.activeSlot = null;
-                    const dd = document.getElementById("modal-stream-dropdown");
-                    if (dd) dd.classList.remove("open");
                 }
 
                 confirmModal() {
                     if (!this.activeSlot) return;
-                    const url = (this.inputUrl?.value || "").trim(),
-                        vid = this.getId(url);
+                    const url = (this.inputUrl?.value || "").trim();
+                    const vid = this.getId(url);
                     if (!vid) {
                         alert("Invalid YouTube URL");
                         return;
@@ -2292,19 +3014,20 @@
                     const slot = this.activeSlot;
                     this.hideDropdown(slot);
                     this.closeModal();
+                    delete this.closedSlots[slot];
                     this.loadVideo(slot, vid, url);
                     this.fetchChannelName(url, slot);
                 }
 
                 resetModalDropdown() {
-                    const dd = document.getElementById("modal-stream-dropdown"),
-                        ht = document.getElementById("modal-dropdown-selected"),
-                        dl = document.getElementById("modal-dropdown-list");
+                    const dd = document.getElementById("modal-stream-dropdown");
+                    const ht = document.getElementById("modal-dropdown-selected");
+                    const dl = document.getElementById("modal-dropdown-list");
                     if (dd) dd.classList.remove("open");
                     if (ht) ht.textContent = "Choose a live stream...";
                     if (dl)
                         dl.innerHTML =
-                            '<div class="dropdown-loading"><div class="dropdown-loading-spinner"></div><span>Fetching streams...</span></div>';
+                            '<div class="dropdown-loading"><div class="dropdown-loading-spinner"></div><span>Fetching...</span></div>';
                 }
 
                 toggleModalDropdown() {
@@ -2323,23 +3046,7 @@
                     const cfg = this.channelConfigs[slot];
                     if (!cfg) return;
                     try {
-                        const t = Date.now(),
-                            u = `${cfg.channelUrl}?_t=${t}`;
-                        const ps = this.CORS_PROXIES.map((m) => {
-                            const p = m(u);
-                            return fetch(p, { cache: "no-store", headers: { "Cache-Control": "no-cache" } })
-                                .then((r) => {
-                                    if (!r.ok) throw new Error("Bad");
-                                    return r.text();
-                                })
-                                .then((h) => {
-                                    if (!h || h.length < 1000) throw new Error("Short");
-                                    return h;
-                                });
-                        });
-                        const html = await Promise.any(ps);
-                        const { live, upcoming } = this.parseLiveStreamsWithUpcoming(html);
-                        this.modalLiveStreams = [...live, ...upcoming];
+                        const { live, upcoming } = await this._fetchAllStreamsForChannel(cfg);
                         this.populateModalDropdown(live, upcoming);
                     } catch (e) {
                         this.showModalDropdownError("Failed to load");
@@ -2350,11 +3057,13 @@
                     const dl = document.getElementById("modal-dropdown-list");
                     if (!dl) return;
                     dl.innerHTML = "";
-                    if (live.length === 0 && upcoming.length === 0) {
+
+                    if (!live.length && !upcoming.length) {
                         dl.innerHTML = '<div class="dropdown-error">No streams found</div>';
                         return;
                     }
-                    if (live.length > 0) {
+
+                    if (live.length) {
                         const hdr = document.createElement("div");
                         hdr.className = "dropdown-section-header";
                         hdr.textContent = "🔴 Live Now";
@@ -2367,16 +3076,18 @@
                             dl.appendChild(it);
                         });
                     }
-                    if (upcoming.length > 0) {
+
+                    if (upcoming.length) {
                         const hdr = document.createElement("div");
                         hdr.className = "dropdown-section-header";
-                        hdr.textContent = "📅 Upcoming Today";
+                        hdr.textContent = "📅 Upcoming";
                         dl.appendChild(hdr);
                         upcoming.forEach((s) => {
                             const it = document.createElement("div");
                             it.className = "dropdown-item upcoming-item";
                             it.onclick = () => this.selectModalStream(s);
-                            it.innerHTML = `<div class="dropdown-item-upcoming">SOON</div><span class="dropdown-item-title">${this._escapeHtml(s.title)}</span>${s.scheduledTime ? `<span class="dropdown-item-time">${s.scheduledTime}</span>` : ""}`;
+                            const time = this._formatDateTime(s.scheduledTimestamp, s.scheduledTime);
+                            it.innerHTML = `<div class="dropdown-item-upcoming">SOON</div><span class="dropdown-item-title">${this._escapeHtml(s.title)}</span>${time ? `<span class="dropdown-item-time">${time}</span>` : ""}`;
                             dl.appendChild(it);
                         });
                     }
@@ -2393,62 +3104,136 @@
                     if (ht) ht.textContent = stream.title;
                     const dd = document.getElementById("modal-stream-dropdown");
                     if (dd) dd.classList.remove("open");
+
                     const slot = this.activeSlot;
                     this.hideDropdown(slot);
                     this.closeModal();
+                    delete this.closedSlots[slot];
+
                     const url = `https://www.youtube.com/watch?v=${stream.videoId}`;
                     this.loadVideo(slot, stream.videoId, url);
                     this.fetchChannelName(url, slot);
                 }
 
                 loadVideo(slot, vidId, originalUrl = null) {
-                    if (!slot || !vidId) return;
-                    const isMain = slot === "main";
+                    if (!slot || !vidId) {
+                        console.error("loadVideo: Missing slot or vidId", { slot, vidId });
+                        return;
+                    }
+
+                    console.log(`📺 Loading video ${vidId} in slot ${slot}`);
+
                     this._stopRealtimeLoop(slot);
+                    delete this.closedSlots[slot];
+
                     const te = document.getElementById(`title-${slot}`);
                     if (te) {
                         te.innerText = "Connecting...";
                         te.style.color = "var(--accent-blue)";
                     }
-                    if (this.ytApiReady && window.YT && window.YT.Player) this.createYTPlayer(slot, vidId);
-                    else {
-                        this.pendingLoads = this.pendingLoads.filter((p) => p.slot !== slot);
+
+                    const bd = document.getElementById(`badge-${slot}`);
+                    const bc = document.getElementById(`badge-content-${slot}`);
+                    if (bd) {
+                        bd.style.display = "flex";
+                        bd.style.visibility = "visible";
+                    }
+                    if (bc) bc.innerHTML = `${this.userIconSVG}<span></span>`;
+
+                    if (this.ytApiReady && window.YT?.Player) {
+                        this.createYTPlayer(slot, vidId);
+                    } else {
                         this.pendingLoads.push({ slot, vidId });
                     }
-                    if (isMain) {
-                        const cf = document.getElementById("frame-chat"),
-                            cp = document.getElementById("ph-chat");
+
+                    if (slot === "main") {
+                        const cf = document.getElementById("frame-chat");
+                        const cp = document.getElementById("ph-chat");
                         if (cf && cp) {
                             cp.style.display = "none";
                             cf.style.display = "block";
                             cf.src = this.buildChatUrl(vidId);
                         }
                     }
+
                     this._ensureSlotState(slot);
                     this.slotStates[slot].vidId = vidId;
                     this.slotStates[slot].originalUrl = originalUrl;
-                    const bd = document.getElementById(`badge-${slot}`);
-                    if (bd) bd.style.display = "flex";
+                    this.slotStates[slot].wasLive = true;
+                    this.slotStates[slot].notLiveCount = 0;
+
                     const cb = document.getElementById(`close-${slot}`);
                     if (cb) cb.style.display = "flex";
+
                     this._startRealtimeLoop(slot);
                 }
 
-                closeStream(slot) {
+                async _handleStreamEnded(slot) {
+                    const st = this.slotStates[slot];
+                    if (!st || st.handlingEnd) return;
+                    st.handlingEnd = true;
+
+                    const cfg = this.channelConfigs[slot];
+                    if (!cfg) {
+                        this.closeStream(slot, false);
+                        return;
+                    }
+
+                    const te = document.getElementById(`title-${slot}`);
+                    if (te) te.innerText = "Checking for next stream...";
+
+                    try {
+                        delete this.liveStreamsCache[cfg.channelHandle];
+                        delete this.cacheTimestamps[cfg.channelHandle];
+
+                        const { live, upcoming } = await this._fetchAllStreamsForChannel(cfg);
+                        const currentVidId = st.vidId;
+                        let nextStream =
+                            live.find((s) => s.videoId !== currentVidId) ||
+                            upcoming.find((s) => s.videoId !== currentVidId);
+
+                        if (nextStream) {
+                            st.handlingEnd = false;
+                            this.loadVideo(
+                                slot,
+                                nextStream.videoId,
+                                `https://www.youtube.com/watch?v=${nextStream.videoId}`
+                            );
+                            this.fetchChannelName(`https://www.youtube.com/watch?v=${nextStream.videoId}`, slot);
+                        } else {
+                            this.closeStream(slot, false);
+                        }
+                    } catch (e) {
+                        this.closeStream(slot, false);
+                    }
+                }
+
+                closeStream(slot, isManualClose = true) {
                     if (!slot) return;
-                    const isMain = slot === "main";
+
                     this._stopRealtimeLoop(slot);
+                    delete this.slotStates[slot];
+                    delete this.lastKnownViewerCounts[slot];
+                    this._saveViewerCounts();
+
+                    if (isManualClose) this.closedSlots[slot] = true;
+
                     const te = document.getElementById(`title-${slot}`);
                     if (te) {
                         te.innerText = "Click to Add Stream";
                         te.style.color = "";
                     }
+
                     if (this.players[slot]) {
                         try {
+                            this.players[slot].stopVideo();
                             this.players[slot].destroy();
                         } catch (e) {}
                         delete this.players[slot];
                     }
+
+                    this.pendingLoads = this.pendingLoads.filter((p) => p.slot !== slot);
+
                     const ct = document.getElementById(`player-${slot}`)?.parentElement;
                     if (ct) {
                         const od = document.getElementById(`player-${slot}`);
@@ -2458,43 +3243,78 @@
                         nd.style.cssText = "display:none;position:absolute;top:0;left:0;width:100%;height:100%;";
                         ct.appendChild(nd);
                     }
+
                     const ph = document.getElementById(`ph-${slot}`);
                     if (ph) ph.style.display = "flex";
+
                     const bd = document.getElementById(`badge-${slot}`);
-                    if (bd) bd.style.display = "none";
+                    if (bd) {
+                        bd.style.display = "none";
+                        bd.style.visibility = "hidden";
+                    }
+
+                    const bc = document.getElementById(`badge-content-${slot}`);
+                    if (bc) bc.innerHTML = "";
+
                     const cb = document.getElementById(`close-${slot}`);
                     if (cb) cb.style.display = "none";
-                    if (isMain) {
-                        const cf = document.getElementById("frame-chat"),
-                            cp = document.getElementById("ph-chat");
+
+                    if (slot === "main") {
+                        const cf = document.getElementById("frame-chat");
+                        const cp = document.getElementById("ph-chat");
                         if (cf) {
                             cf.style.display = "none";
                             cf.src = "";
                         }
                         if (cp) cp.style.display = "flex";
-                        delete this.previousViewerCounts["main"];
                     }
-                    if (this.slotStates[slot]) {
-                        this.slotStates[slot].vidId = null;
-                        this.slotStates[slot].originalUrl = null;
-                    }
+
                     if (this.currentUnmutedSlot === slot) this.currentUnmutedSlot = null;
-                    if (this.channelConfigs[slot]) setTimeout(() => this.showDropdown(slot), 300);
+                    if (this.channelConfigs[slot]) setTimeout(() => this.showDropdownWithoutAutoLoad(slot), 300);
+                }
+
+                showDropdownWithoutAutoLoad(slot) {
+                    const wr = document.getElementById(`dropdown-wrapper-${slot}`);
+                    if (wr) wr.classList.remove("hidden");
+                    const ht = document.getElementById(`dropdown-selected-${slot}`);
+                    if (ht) ht.textContent = "Choose a live stream...";
+                    const dd = document.getElementById(`stream-dropdown-${slot}`);
+                    if (dd) dd.classList.remove("open");
+                    this.fetchLiveStreamsWithoutAutoLoad(slot);
+                }
+
+                async fetchLiveStreamsWithoutAutoLoad(slot) {
+                    const cfg = this.channelConfigs[slot];
+                    if (!cfg) return;
+                    const dl = document.getElementById(`dropdown-list-${slot}`);
+                    const dc = document.getElementById(`dropdown-channel-${slot}`);
+                    if (!dl) return;
+
+                    dl.innerHTML =
+                        '<div class="dropdown-loading"><div class="dropdown-loading-spinner"></div><span>Fetching...</span></div>';
+                    if (dc) dc.textContent = cfg.channelName;
+
+                    try {
+                        delete this.liveStreamsCache[cfg.channelHandle];
+                        delete this.cacheTimestamps[cfg.channelHandle];
+
+                        const { live, upcoming } = await this._fetchAllStreamsForChannel(cfg);
+                        this.liveStreamsCache[slot] = { live, upcoming };
+                        if (live.length || upcoming.length) this.populateDropdown(slot, live, upcoming);
+                        else this.showDropdownError(slot, "No streams found");
+                    } catch (e) {
+                        this.showDropdownError(slot, "Failed to load");
+                    }
                 }
 
                 async fetchChannelName(videoUrl, slot) {
                     try {
-                        const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`),
-                            d = await r.json(),
-                            te = document.getElementById(`title-${slot}`);
+                        const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(videoUrl)}`);
+                        const d = await r.json();
+                        const te = document.getElementById(`title-${slot}`);
                         if (te) {
-                            if (d.author_name) {
-                                te.innerText = d.author_name;
-                                te.style.color = "var(--text-primary)";
-                            } else {
-                                te.innerText = "YouTube Channel";
-                                te.style.color = "var(--text-secondary)";
-                            }
+                            te.innerText = d.author_name || "YouTube Channel";
+                            te.style.color = d.author_name ? "var(--text-primary)" : "var(--text-secondary)";
                         }
                     } catch (e) {
                         const te = document.getElementById(`title-${slot}`);
@@ -2506,20 +3326,26 @@
                 }
 
                 _ensureSlotState(slot) {
-                    if (!this.slotStates[slot])
+                    if (!this.slotStates[slot]) {
                         this.slotStates[slot] = {
                             vidId: null,
                             timerId: null,
-                            lastFetchTime: 0,
                             fetching: false,
                             realtimeActive: false,
                             originalUrl: null,
+                            consecutiveFailures: 0,
+                            wasLive: false,
+                            notLiveCount: 0,
+                            handlingEnd: false,
                         };
+                    }
                 }
 
                 _startRealtimeLoop(slot) {
                     this._ensureSlotState(slot);
                     this.slotStates[slot].realtimeActive = true;
+                    this.slotStates[slot].consecutiveFailures = 0;
+                    this.slotStates[slot].handlingEnd = false;
                     this._fetchAndUpdate(slot).finally(() => this._scheduleNextFetch(slot));
                 }
 
@@ -2536,228 +3362,258 @@
 
                 _scheduleNextFetch(slot) {
                     const st = this.slotStates[slot];
-                    if (!st || !st.realtimeActive) return;
-                    const el = st.lastFetchTime ? Date.now() - st.lastFetchTime : this.MIN_INTERVAL_MS,
-                        wt = Math.max(0, this.MIN_INTERVAL_MS - el);
+                    if (!st?.realtimeActive) return;
+                    if (st.timerId) clearTimeout(st.timerId);
+
+                    const interval = Math.min(this.MIN_INTERVAL_MS * Math.pow(1.5, st.consecutiveFailures || 0), 20000);
+
                     st.timerId = setTimeout(async () => {
                         if (st.realtimeActive) {
                             await this._fetchAndUpdate(slot);
                             this._scheduleNextFetch(slot);
                         }
-                    }, wt);
-                }
-
-                _triggerMilestoneCelebration() {
-                    const bd = document.getElementById("badge-main");
-                    if (!bd) return;
-                    bd.classList.remove("celebrating");
-                    void bd.offsetWidth;
-                    bd.classList.add("celebrating");
-                    setTimeout(() => bd.classList.remove("celebrating"), 1500);
-                }
-
-                _checkMilestone(slot, nc) {
-                    if (slot !== "main") return;
-                    if (nc === null || isNaN(nc)) return;
-                    const hp = this.previousViewerCounts.hasOwnProperty("main"),
-                        pc = this.previousViewerCounts["main"] || 0;
-                    if (!hp) {
-                        this.previousViewerCounts["main"] = nc;
-                        return;
-                    }
-                    const pm = Math.floor(pc / this.MILESTONE_THRESHOLD),
-                        nm = Math.floor(nc / this.MILESTONE_THRESHOLD);
-                    if (nm > pm && nc > pc) this._triggerMilestoneCelebration();
-                    this.previousViewerCounts["main"] = nc;
+                    }, interval);
                 }
 
                 async _fetchAndUpdate(slot) {
                     const st = this.slotStates[slot];
-                    if (!st || !st.vidId || st.fetching) return;
+                    if (!st?.vidId || st.fetching || st.handlingEnd) return;
                     st.fetching = true;
+
                     try {
-                        const html = await this._fetchYouTubePage(st.vidId);
-                        st.lastFetchTime = Date.now();
+                        const html = await this._fetchYouTubePageFast(st.vidId);
                         if (!html) {
-                            this._updateBadgeText(slot, "—");
+                            st.consecutiveFailures++;
                             return;
                         }
+
                         const d = this._extractViewerData(html);
-                        let n = null;
-                        if (d.concurrentViewers) n = this._parseNumber(d.concurrentViewers);
-                        else if (d.viewCountText) n = this._parseNumber(d.viewCountText);
-                        else if (d.totalViews) n = this._parseNumber(d.totalViews);
-                        if (n !== null && !isNaN(n)) {
-                            this._checkMilestone(slot, n);
+                        const isCurrentlyLive = d.isLive || d.isLiveNow;
+
+                        if (st.wasLive && !isCurrentlyLive) {
+                            st.notLiveCount++;
+                            if (st.notLiveCount >= this.STREAM_END_CONFIRM_COUNT) {
+                                st.fetching = false;
+                                this._handleStreamEnded(slot);
+                                return;
+                            }
+                        } else if (isCurrentlyLive) {
+                            st.notLiveCount = 0;
+                            st.wasLive = true;
+                        }
+
+                        const n = this._parseNumber(d.concurrentViewers) || this._parseNumber(d.viewCountText);
+
+                        if (n && n > 0) {
                             this._updateBadgeText(slot, this._formatNumber(n));
-                        } else if (d.viewCountText)
-                            this._updateBadgeText(
-                                slot,
-                                d.viewCountText
-                                    .replace(/\s+$/, "")
-                                    .replace(/watching.*/i, "")
-                                    .trim()
-                            );
-                        else this._updateBadgeText(slot, "—");
+                            st.consecutiveFailures = 0;
+                        } else {
+                            st.consecutiveFailures++;
+                        }
                     } catch (e) {
-                        this._updateBadgeText(slot, "—");
+                        st.consecutiveFailures++;
                     } finally {
                         st.fetching = false;
                     }
                 }
 
                 _updateBadgeText(slot, numText) {
+                    const textStr = String(numText || "").trim();
+                    if (!textStr || !/\d/.test(textStr)) return;
+
+                    // --- BADGE MILESTONE ANIMATION LOGIC ---
+                    if (slot === "main") {
+                        const currentCount = parseInt(textStr.replace(/[^\d]/g, ""), 10);
+                        const prevCount = this.previousViewerCounts[slot];
+
+                        if (prevCount !== undefined) {
+                            const currentMilestone = Math.floor(currentCount / this.MILESTONE_THRESHOLD);
+                            const prevMilestone = Math.floor(prevCount / this.MILESTONE_THRESHOLD);
+
+                            if (!this.highestMilestones) this.highestMilestones = {};
+                            const highest = this.highestMilestones[slot] || prevMilestone;
+
+                            if (currentMilestone > highest && currentMilestone >= 1) {
+                                this.triggerBadgeMilestoneAnimation(slot);
+                                this.highestMilestones[slot] = currentMilestone;
+                            } else {
+                                // Prevent bounce triggers if viewers fluctuate closely around a milestone
+                                this.highestMilestones[slot] = Math.max(highest, currentMilestone);
+                            }
+                        }
+                        this.previousViewerCounts[slot] = currentCount;
+                    }
+                    // ----------------------------------------
+
                     const c = document.getElementById(`badge-content-${slot}`);
-                    if (c) c.innerHTML = `<span>${this._escapeHtml(String(numText))}</span>${this.userIconSVG}`;
+                    if (!c) return;
+
+                    const badge = document.getElementById(`badge-${slot}`);
+                    if (badge?.style.display === "none") badge.style.display = "flex";
+
+                    this.lastKnownViewerCounts[slot] = textStr;
+                    this._saveViewerCounts();
+                    c.innerHTML = `${this.userIconSVG}<span>${this._escapeHtml(textStr)}</span>`;
                 }
+
+                // --- CATCHY "RGB STROBE / JACKPOT" BADGE ANIMATION ---
+                triggerBadgeMilestoneAnimation(slot) {
+                    const badge = document.getElementById(`badge-${slot}`);
+                    if (!badge) return;
+
+                    // Extremely visible animation: scales up and violently flashes Backgrounds/Text/Glows
+                    badge.animate(
+                        [
+                            { transform: "scale(1)" },
+                            {
+                                transform: "scale(1.3)",
+                                background: "#FFD700",
+                                color: "#000000",
+                                boxShadow: "0 0 20px #FFD700, 0 0 40px #FFD700",
+                                offset: 0.1,
+                            },
+                            {
+                                transform: "scale(1.1)",
+                                background: "#FF003C",
+                                color: "#FFFFFF",
+                                boxShadow: "0 0 20px #FF003C, 0 0 40px #FF003C",
+                                offset: 0.3,
+                            },
+                            {
+                                transform: "scale(1.4)",
+                                background: "#00FFCC",
+                                color: "#000000",
+                                boxShadow: "0 0 20px #00FFCC, 0 0 40px #00FFCC",
+                                offset: 0.5,
+                            },
+                            {
+                                transform: "scale(1.2)",
+                                background: "#FF00FF",
+                                color: "#FFFFFF",
+                                boxShadow: "0 0 20px #FF00FF, 0 0 40px #FF00FF",
+                                offset: 0.7,
+                            },
+                            {
+                                transform: "scale(1.3)",
+                                background: "#FFD700",
+                                color: "#000000",
+                                boxShadow: "0 0 20px #FFD700, 0 0 40px #FFD700",
+                                offset: 0.9,
+                            },
+                            { transform: "scale(1)", offset: 1 }, // Returns seamlessly to underlying CSS styles
+                        ],
+                        {
+                            duration: 2000, // Exactly 2 seconds
+                            iterations: 1,
+                            easing: "ease-in-out",
+                        }
+                    );
+                }
+                // -----------------------------------------------------
 
                 _escapeHtml(s) {
-                    return s.replace(
+                    return String(s).replace(
                         /[&<>"']/g,
-                        (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]
+                        (m) =>
+                            ({
+                                "&": "&amp;",
+                                "<": "&lt;",
+                                ">": "&gt;",
+                                '"': "&quot;",
+                                "'": "&#39;",
+                            })[m]
                     );
                 }
 
-                async _fetchYouTubePage(vidId) {
+                async _fetchYouTubePageFast(vidId) {
                     const url = `https://www.youtube.com/watch?v=${vidId}&t=${Date.now()}`;
-                    const ps = this.CORS_PROXIES.map(
-                        (m) =>
-                            new Promise(async (res, rej) => {
-                                const p = m(url),
-                                    c = new AbortController(),
-                                    to = setTimeout(() => c.abort(), this.FETCH_TIMEOUT);
-                                try {
-                                    const r = await fetch(p, {
-                                        signal: c.signal,
-                                        headers: { Accept: "text/html" },
-                                        cache: "no-store",
-                                    });
-                                    clearTimeout(to);
-                                    if (!r.ok) return rej();
-                                    const t = await r.text();
-                                    if (!t || t.length < 800) return rej();
-                                    if (!t.includes("ytInitialData") && !t.includes("ytInitialPlayerResponse"))
-                                        return rej();
-                                    return res(t);
-                                } catch (e) {
-                                    clearTimeout(to);
-                                    return rej(e);
-                                }
-                            })
-                    );
+
+                    const promises = this.CORS_PROXIES.map(async (proxyFn) => {
+                        const controller = new AbortController();
+                        const timeout = setTimeout(() => controller.abort(), this.FETCH_TIMEOUT);
+
+                        try {
+                            const response = await fetch(proxyFn(url), {
+                                signal: controller.signal,
+                                cache: "no-store",
+                            });
+                            clearTimeout(timeout);
+                            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                            const text = await response.text();
+                            if (text.length < 800 || !text.includes("ytInitial")) throw new Error("Invalid");
+                            return text;
+                        } catch (e) {
+                            clearTimeout(timeout);
+                            throw e;
+                        }
+                    });
+
                     try {
-                        if (typeof Promise.any === "function") return await Promise.any(ps);
-                        return null;
+                        return await Promise.any(promises);
                     } catch (e) {
                         return null;
                     }
                 }
 
-                _extractEmbeddedJSON(html, varName) {
-                    if (!html || !varName) return null;
-                    const idx = html.indexOf(varName);
-                    if (idx === -1) return null;
-                    let start = html.indexOf("{", idx);
-                    if (start === -1) return null;
-                    let depth = 0,
-                        inStr = false,
-                        esc = false;
-                    for (let i = start; i < html.length; i++) {
-                        const ch = html[i];
-                        if (esc) {
-                            esc = false;
-                            continue;
-                        }
-                        if (ch === "\\") {
-                            esc = true;
-                            continue;
-                        }
-                        if (ch === '"') {
-                            inStr = !inStr;
-                            continue;
-                        }
-                        if (!inStr) {
-                            if (ch === "{") depth++;
-                            else if (ch === "}") {
-                                depth--;
-                                if (depth === 0) {
-                                    try {
-                                        return JSON.parse(html.substring(start, i + 1));
-                                    } catch (e) {
-                                        return null;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return null;
-                }
-
                 _extractViewerData(html) {
-                    const r = {
-                        concurrentViewers: null,
-                        totalViews: null,
-                        isLive: false,
-                        isLiveNow: false,
-                        title: null,
-                        viewCountText: null,
-                    };
-                    let pr = this._extractEmbeddedJSON(html, "ytInitialPlayerResponse");
-                    if (!pr)
-                        pr =
-                            this._extractEmbeddedJSON(html, 'window["ytInitialPlayerResponse"]') ||
-                            this._extractEmbeddedJSON(html, "window.ytInitialPlayerResponse");
-                    if (pr) {
-                        const vd = pr.videoDetails;
-                        if (vd) {
-                            r.title = vd.title || null;
-                            r.totalViews = vd.viewCount || null;
-                            r.isLive = !!vd.isLive || !!vd.isLiveContent;
-                        }
-                        if (pr?.microformat?.playerMicroformatRenderer?.liveBroadcastDetails) {
-                            const lb = pr.microformat.playerMicroformatRenderer.liveBroadcastDetails;
-                            if (lb.concurrentViewers) r.concurrentViewers = lb.concurrentViewers;
-                            r.isLiveNow = !!lb.isLiveNow || r.isLive;
-                        }
+                    const r = { concurrentViewers: null, isLive: false, isLiveNow: false, viewCountText: null };
+
+                    const cvMatch = html.match(/"concurrentViewers"\s*:\s*"?(\d+)"?/);
+                    if (cvMatch) {
+                        r.concurrentViewers = cvMatch[1];
+                        r.isLiveNow = true;
                     }
-                    const id = this._extractEmbeddedJSON(html, "ytInitialData");
-                    if (id) {
+
+                    const prMatch = html.match(/ytInitialPlayerResponse\s*=\s*({.+?});/s);
+                    if (prMatch) {
                         try {
+                            const pr = JSON.parse(prMatch[1]);
+                            const vd = pr?.videoDetails;
+                            if (vd) {
+                                r.isLive = !!vd.isLive || !!vd.isLiveContent;
+                            }
+                            const lb = pr?.microformat?.playerMicroformatRenderer?.liveBroadcastDetails;
+                            if (lb) {
+                                if (lb.concurrentViewers && !r.concurrentViewers)
+                                    r.concurrentViewers = lb.concurrentViewers;
+                                r.isLiveNow = !!lb.isLiveNow || r.isLive;
+                            }
+                        } catch (e) {}
+                    }
+
+                    const idMatch = html.match(/ytInitialData\s*=\s*({.+?});/s);
+                    if (idMatch) {
+                        try {
+                            const id = JSON.parse(idMatch[1]);
                             const cts = id?.contents?.twoColumnWatchNextResults?.results?.results?.contents;
-                            if (cts && Array.isArray(cts)) {
+                            if (Array.isArray(cts)) {
                                 for (const it of cts) {
                                     const vcr = it?.videoPrimaryInfoRenderer?.viewCount?.videoViewCountRenderer;
                                     if (vcr) {
-                                        if (vcr.viewCount?.simpleText) r.viewCountText = vcr.viewCount.simpleText;
-                                        else if (vcr.viewCount?.runs)
-                                            r.viewCountText = vcr.viewCount.runs.map((x) => x.text).join("");
+                                        r.viewCountText =
+                                            vcr.viewCount?.simpleText ||
+                                            vcr.viewCount?.runs?.map((x) => x.text).join("") ||
+                                            null;
                                         if (vcr.isLive) r.isLiveNow = true;
                                     }
                                 }
                             }
                         } catch (e) {}
                     }
-                    if (!r.concurrentViewers && !r.viewCountText) {
-                        const m = html.match(/"concurrentViewers"\s*:\s*"(\d+)"/i);
-                        if (m) {
-                            r.concurrentViewers = m[1];
-                            r.isLiveNow = true;
-                        }
-                    }
+
                     return r;
                 }
 
                 _parseNumber(s) {
-                    if (s == null) return null;
-                    const m = String(s).match(/([\d.,]+)/);
+                    if (!s) return null;
+                    const m = String(s).match(/([\d.,\s]+)/);
                     if (!m) return null;
                     const d = m[1].replace(/[^\d]/g, "");
                     return d ? parseInt(d, 10) : null;
                 }
 
                 _formatNumber(n) {
-                    if (typeof n !== "number") n = Number(n) || 0;
-                    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    return String(Number(n) || 0).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                 }
 
                 getId(url) {
@@ -2765,12 +3621,13 @@
                     url = url.trim();
                     if (/^[A-Za-z0-9_-]{11}$/.test(url)) return url;
                     const m = url.match(
-                        /(?:youtube\.com\/watch\?.*v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/live\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/
+                        /(?:youtube\.com\/watch\?.*v=|youtu\.be\/|youtube\.com\/live\/)([a-zA-Z0-9_-]{11})/
                     );
                     if (m) return m[1];
                     try {
-                        const v = new URL(url).searchParams.get("v");
-                        if (v && /^[A-Za-z0-9_-]{11}$/.test(v)) return v;
+                        const parsed = new URL(url);
+                        const v = parsed.searchParams.get("v");
+                        if (v && v.length === 11) return v;
                     } catch (e) {}
                     return null;
                 }
@@ -2782,178 +3639,38 @@
                 async fetchLiveStreams(slot) {
                     const cfg = this.channelConfigs[slot];
                     if (!cfg) return;
-                    const dl = document.getElementById(`dropdown-list-${slot}`),
-                        dc = document.getElementById(`dropdown-channel-${slot}`);
+
+                    const dl = document.getElementById(`dropdown-list-${slot}`);
+                    const dc = document.getElementById(`dropdown-channel-${slot}`);
                     if (!dl) return;
+
                     dl.innerHTML =
-                        '<div class="dropdown-loading"><div class="dropdown-loading-spinner"></div><span>Fetching streams...</span></div>';
+                        '<div class="dropdown-loading"><div class="dropdown-loading-spinner"></div><span>Fetching...</span></div>';
                     if (dc) dc.textContent = cfg.channelName;
+
                     try {
-                        const t = Date.now(),
-                            u = `${cfg.channelUrl}?_t=${t}`;
-                        const ps = this.CORS_PROXIES.map((m) => {
-                            const p = m(u);
-                            return fetch(p, { cache: "no-store", headers: { "Cache-Control": "no-cache" } })
-                                .then((r) => {
-                                    if (!r.ok) throw new Error("Bad");
-                                    return r.text();
-                                })
-                                .then((h) => {
-                                    if (!h || h.length < 1000) throw new Error("Short");
-                                    return h;
-                                });
-                        });
-                        const html = await Promise.any(ps);
-                        const { live, upcoming } = this.parseLiveStreamsWithUpcoming(html);
+                        const { live, upcoming } = await this._fetchAllStreamsForChannel(cfg);
                         this.liveStreamsCache[slot] = { live, upcoming };
-                        if (live.length > 0 || upcoming.length > 0) this.populateDropdown(slot, live, upcoming);
-                        else this.showDropdownError(slot, "No streams found");
+
+                        if (live.length || upcoming.length) {
+                            this.populateDropdown(slot, live, upcoming);
+                            if (!this.autoLoadDone[slot] && !this.closedSlots[slot]) {
+                                this.autoLoadBestStream(slot);
+                            }
+                        } else {
+                            this.showDropdownError(slot, "No streams found");
+                        }
                     } catch (e) {
                         this.showDropdownError(slot, "Failed to load");
                     }
-                }
-
-                parseLiveStreamsWithUpcoming(html) {
-                    const live = [],
-                        upcoming = [];
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    const tomorrow = new Date(today);
-                    tomorrow.setDate(tomorrow.getDate() + 1);
-                    try {
-                        const dm = html.match(/var ytInitialData = ({.*?});/s);
-                        let data = null;
-                        if (dm) data = JSON.parse(dm[1]);
-                        else data = this._extractEmbeddedJSON(html, "ytInitialData");
-                        if (data) {
-                            const tabs = data?.contents?.twoColumnBrowseResultsRenderer?.tabs || [];
-                            for (const tab of tabs) {
-                                const tr = tab?.tabRenderer;
-                                if (!tr) continue;
-                                const ct = tr?.content,
-                                    rgr = ct?.richGridRenderer;
-                                if (rgr) {
-                                    const cts = rgr?.contents || [];
-                                    for (const it of cts) {
-                                        const rir = it?.richItemRenderer,
-                                            vr = rir?.content?.videoRenderer;
-                                        if (vr) {
-                                            const si = this.extractStreamInfoWithSchedule(vr, today, tomorrow);
-                                            if (si) {
-                                                if (si.isLive) live.push(si);
-                                                else if (si.isUpcoming) upcoming.push(si);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            const gr =
-                                data?.contents?.twoColumnBrowseResultsRenderer?.tabs?.[0]?.tabRenderer?.content
-                                    ?.sectionListRenderer?.contents?.[0]?.itemSectionRenderer?.contents?.[0]
-                                    ?.gridRenderer;
-                            if (gr) {
-                                const its = gr?.items || [];
-                                for (const it of its) {
-                                    const vr = it?.gridVideoRenderer;
-                                    if (vr) {
-                                        const si = this.extractStreamInfoWithSchedule(vr, today, tomorrow);
-                                        if (si) {
-                                            if (si.isLive) live.push(si);
-                                            else if (si.isUpcoming) upcoming.push(si);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } catch (e) {}
-                    return { live, upcoming };
-                }
-
-                extractStreamInfoWithSchedule(renderer, today, tomorrow) {
-                    if (!renderer) return null;
-                    const videoId = renderer.videoId;
-                    if (!videoId) return null;
-                    let title = "Untitled";
-                    if (renderer.title?.runs?.[0]?.text) title = renderer.title.runs[0].text;
-                    else if (renderer.title?.simpleText) title = renderer.title.simpleText;
-                    let isLive = false,
-                        isUpcoming = false,
-                        scheduledTime = null,
-                        scheduledDate = null;
-                    const badges = renderer.badges || [];
-                    for (const b of badges) {
-                        const lt = b?.metadataBadgeRenderer?.label?.toLowerCase() || "",
-                            st = b?.metadataBadgeRenderer?.style?.toLowerCase() || "";
-                        if (lt.includes("live") || st.includes("live")) {
-                            isLive = true;
-                            break;
-                        }
-                    }
-                    const overlays = renderer.thumbnailOverlays || [];
-                    for (const ov of overlays) {
-                        const sr = ov?.thumbnailOverlayTimeStatusRenderer;
-                        if (sr?.style === "LIVE") {
-                            isLive = true;
-                            break;
-                        }
-                        if (sr?.style === "UPCOMING") {
-                            isUpcoming = true;
-                            break;
-                        }
-                    }
-                    const vct =
-                        renderer.viewCountText?.runs?.map((r) => r.text).join("") ||
-                        renderer.viewCountText?.simpleText ||
-                        "";
-                    if (vct.toLowerCase().includes("watching")) isLive = true;
-                    if (vct.toLowerCase().includes("scheduled") || vct.toLowerCase().includes("premieres"))
-                        isUpcoming = true;
-                    let viewers = null;
-                    if (vct && isLive) {
-                        const m = vct.match(/([\d,.\s]+)/);
-                        if (m) viewers = m[1].trim();
-                    }
-                    const ued = renderer.upcomingEventData;
-                    if (ued) {
-                        isUpcoming = true;
-                        isLive = false;
-                        if (ued.startTime) {
-                            const st = parseInt(ued.startTime) * 1000;
-                            const sd = new Date(st);
-                            scheduledDate = sd;
-                            if (sd >= today && sd < tomorrow) {
-                                const hrs = sd.getHours().toString().padStart(2, "0");
-                                const mins = sd.getMinutes().toString().padStart(2, "0");
-                                scheduledTime = `${hrs}:${mins}`;
-                            } else {
-                                isUpcoming = false;
-                            }
-                        }
-                    }
-                    const publishedTime = renderer.publishedTimeText?.simpleText || "";
-                    if (publishedTime.toLowerCase().includes("scheduled")) {
-                        isUpcoming = true;
-                        isLive = false;
-                        const tm = publishedTime.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
-                        if (tm) {
-                            scheduledTime = tm[0];
-                        }
-                    }
-                    if (isUpcoming && !scheduledTime && !scheduledDate) {
-                        isUpcoming = false;
-                    }
-                    if (isLive)
-                        return { videoId, title, isLive: true, isUpcoming: false, viewers, scheduledTime: null };
-                    if (isUpcoming)
-                        return { videoId, title, isLive: false, isUpcoming: true, viewers: null, scheduledTime };
-                    return null;
                 }
 
                 populateDropdown(slot, live, upcoming) {
                     const dl = document.getElementById(`dropdown-list-${slot}`);
                     if (!dl) return;
                     dl.innerHTML = "";
-                    if (live.length > 0) {
+
+                    if (live.length) {
                         const hdr = document.createElement("div");
                         hdr.className = "dropdown-section-header";
                         hdr.textContent = "🔴 Live Now";
@@ -2966,16 +3683,18 @@
                             dl.appendChild(it);
                         });
                     }
-                    if (upcoming.length > 0) {
+
+                    if (upcoming.length) {
                         const hdr = document.createElement("div");
                         hdr.className = "dropdown-section-header";
-                        hdr.textContent = "📅 Upcoming Today";
+                        hdr.textContent = "📅 Upcoming";
                         dl.appendChild(hdr);
                         upcoming.forEach((s) => {
                             const it = document.createElement("div");
                             it.className = "dropdown-item upcoming-item";
                             it.onclick = () => this.selectStream(slot, s);
-                            it.innerHTML = `<div class="dropdown-item-upcoming">SOON</div><span class="dropdown-item-title">${this._escapeHtml(s.title)}</span>${s.scheduledTime ? `<span class="dropdown-item-time">${s.scheduledTime}</span>` : ""}`;
+                            const time = this._formatDateTime(s.scheduledTimestamp, s.scheduledTime);
+                            it.innerHTML = `<div class="dropdown-item-upcoming">SOON</div><span class="dropdown-item-title">${this._escapeHtml(s.title)}</span>${time ? `<span class="dropdown-item-time">${time}</span>` : ""}`;
                             dl.appendChild(it);
                         });
                     }
@@ -2993,11 +3712,17 @@
                 }
 
                 selectStream(slot, stream) {
+                    console.log(`📺 Selected stream: ${stream.title} for slot ${slot}`);
+
                     const ht = document.getElementById(`dropdown-selected-${slot}`);
                     if (ht) ht.textContent = stream.title;
+
                     const dd = document.getElementById(`stream-dropdown-${slot}`);
                     if (dd) dd.classList.remove("open");
+
                     this.hideDropdown(slot);
+                    delete this.closedSlots[slot];
+
                     const url = `https://www.youtube.com/watch?v=${stream.videoId}`;
                     this.loadVideo(slot, stream.videoId, url);
                     this.fetchChannelName(url, slot);
@@ -3013,37 +3738,53 @@
                 }
 
                 refreshLiveStreams(slot) {
+                    const cfg = this.channelConfigs[slot];
+                    if (cfg) {
+                        delete this.liveStreamsCache[cfg.channelHandle];
+                        delete this.cacheTimestamps[cfg.channelHandle];
+                    }
+
                     const wr = document.getElementById(`dropdown-wrapper-${slot}`);
                     if (wr) wr.classList.remove("hidden");
+
                     const ht = document.getElementById(`dropdown-selected-${slot}`);
                     if (ht) ht.textContent = "Choose a live stream...";
+
                     const dd = document.getElementById(`stream-dropdown-${slot}`);
                     if (dd) dd.classList.remove("open");
-                    this.fetchLiveStreams(slot);
+
+                    this.fetchLiveStreamsWithoutAutoLoad(slot);
                 }
 
                 showDropdown(slot) {
                     const wr = document.getElementById(`dropdown-wrapper-${slot}`);
                     if (wr) wr.classList.remove("hidden");
+
                     const ht = document.getElementById(`dropdown-selected-${slot}`);
                     if (ht) ht.textContent = "Choose a live stream...";
-                    const dd = document.getElementById(`stream-dropdown-${slot}`);
-                    if (dd) dd.classList.remove("open");
+
                     this.fetchLiveStreams(slot);
                 }
             }
 
+            // Initialize
             const app = new StreamApp();
             window.app = app;
 
+            window.addEventListener("beforeunload", () => {
+                if (app.muteCheckInterval) clearInterval(app.muteCheckInterval);
+                Object.values(app.slotStates).forEach((st) => {
+                    if (st.timerId) clearTimeout(st.timerId);
+                });
+            });
+
             document.getElementById("modal-url")?.addEventListener("keydown", (e) => {
-                if (e.key === "Enter") window.app.confirmModal();
+                if (e.key === "Enter") window.app?.confirmModal();
             });
 
             window.addEventListener("keydown", (e) => {
-                if (e.key === "Escape") app.closeModal();
+                if (e.key === "Escape") window.app?.closeModal();
             });
         </script>
     </body>
 </html>
-
