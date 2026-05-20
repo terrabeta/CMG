@@ -1,9 +1,10 @@
+
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title>COMP_WIDE_MCR_TOOLS_V1</title>
+        <title>COMP_WIDE_MCR_TOOLS_V20052026</title>
         <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
@@ -2219,10 +2220,22 @@
         <script src="https://www.youtube.com/iframe_api"></script>
         <script>
             // =============================================
-            const WORKING_PROXIES = [
-                (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-                (url) => `https://cors.eu.org/${url}`,
-            ];
+            // =============================================
+const WORKING_PROXIES = [
+    // ✅ very stable & widely used
+    (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    
+    // ✅ generally reliable simple proxies
+    (url) => `https://corsproxy.org/?${encodeURIComponent(url)}`,
+    (url) => `https://cors.eu.org/${url}`,
+
+    // ✅ corsfix (actively maintained, good uptime)
+    (url) => `https://proxy.corsfix.com/?${url}`,
+    (url) => `https://corsfix.com/proxy?${encodeURIComponent(url)}`,
+
+    // ✅ codetabs (keep only one correct variant)
+    (url) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+];
 
             // =============================================
             // TICKER CODE
@@ -2688,8 +2701,17 @@
                                 sd.getMinutes().toString().padStart(2, "0");
                         }
                     }
+                    
+                    // ========================= FIX START =========================
+                    // This is the critical fix. YouTube sometimes sends a "live" badge
+                    // for an upcoming stream (e.g., a premiere). This logic ensures
+                    // that if a stream is marked as both, we prioritize 'upcoming' status
+                    // to ensure it appears in the dropdown list before it begins.
+                    if (isLive && isUpcoming) {
+                        isLive = false;
+                    }
+                    // ========================== FIX END ==========================
 
-                    if (isLive) isUpcoming = false;
                     if (!isLive && !isUpcoming) return null;
 
                     return { videoId, title, isLive, isUpcoming, viewers, scheduledTime, scheduledTimestamp };
@@ -2768,8 +2790,9 @@
                                     found.set(vd.videoId, {
                                         videoId: vd.videoId,
                                         title: vd.title || "Live Stream",
+                                        // Prioritize upcoming status in case of conflict (e.g. premieres)
                                         isLive: isLive && !isUpcoming,
-                                        isUpcoming: isUpcoming && !isLive,
+                                        isUpcoming: isUpcoming,
                                         viewers,
                                         scheduledTime: null,
                                         scheduledTimestamp: null,
